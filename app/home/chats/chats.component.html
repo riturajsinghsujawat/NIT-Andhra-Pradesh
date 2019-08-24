@@ -1,0 +1,131 @@
+<!-- <input type="text" [(ngModel)]="in">
+<button (click)="sendMessage()">send</button>
+<a [routerLink]="['/home/chats/',user.docId]" *ngFor="let user of users">{{user.docId}}</a>
+<br>
+<p (click)="getMessages(user.docId)" *ngFor="let user of users">{{user.docId}}</p> -->
+<div class="page has-sidebar has-sidebar-fluid has-sidebar-expand-xl">
+  <div class="sidebar-backdrop"></div>
+  <!-- .page-inner -->
+  <div class="page-inner page-inner-fill">
+
+    <header class="page-navs bg-light shadow-sm" [ngClass]="{'marginsm-header-scroll': commonService.direction=='down', 'marginsm-header': commonService.direction!='down'}" >
+      <!-- .input-group -->
+      <div class="input-group has-clearable">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+              class="fa fa-times-circle"></i></span></button> <label class="input-group-prepend"
+          for="searchClients"><span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span></label>
+        <input type="text" class="form-control" id="searchClients" data-filter=".board .list-group-item"
+          placeholder="Find Person">
+      </div><!-- /.input-group -->
+    </header> <!-- board -->
+    <div class="spinner-border text-primary mt-4" style="margin-left:150px !important;" *ngIf="loader" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>  
+    <div style="overflow-y:scroll;-webkit-overflow-scrolling: touch;overflow-x: hidden; " class="board p-0">
+      <!-- .list-group -->
+      <div class="list-group list-group-flush list-group-divider border-top" data-toggle="radiolist">
+        <!-- .list-group-item -->
+        <div *ngFor="let chat of users" (click)="getMessages(chat)" class="list-group-item active" data-toggle="sidebar"
+          data-sidebar="show">
+          <a class="stretched-link"></a> <!-- .list-group-item-figure -->
+          <div class="list-group-item-figure">
+            <div class="tile tile-circle bg-blue"> {{chat.about.name.substring(0,1)}} </div>
+          </div><!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div class="list-group-item-body">
+            <h4 class="list-group-item-title"> {{chat.about.name}} </h4>
+            <p class="list-group-item-text"> {{chat.about.email}} </p>
+          </div><!-- /.list-group-item-body -->
+        </div><!-- /.list-group-item -->
+        <div *ngIf="false" class="list-group-item">
+          <!-- .list-group-item-body -->
+          <div class="list-group-item-body text-center py-4">
+            <!-- .spinner -->
+           <!-- /.spinner -->
+          </div><!-- /.list-group-item-body -->
+        </div><!-- /.list-group-item -->
+
+      </div><!-- /.list-group -->
+
+
+      <div  *ngIf="users.length==0" >
+        <br>
+        <p class="px-auto" >You can view all resumes and send message to anyone first.</p>
+        <p class="mr-3" >Then you can continue your conversation with listed persons.</p>
+      </div>
+
+
+      <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+      </div>
+      <div class="ps__rail-y" style="top: 0px; height: 525px; right: 0px;">
+        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 260px;"></div>
+      </div>
+    </div><!-- /board -->
+  </div><!-- /.page-inner -->
+  <!-- .page-sidebar -->
+  <div class="page-sidebar bg-light">
+    <div class="message">
+      <!-- message header -->
+      <div class="message-header marginsm" >
+        <div class="d-flex">
+          <a class="btn btn-light btn-icon " data-toggle="sidebar"><i class="fa fa-flip-horizontal fa-share"></i></a>
+        </div>
+        <h4 *ngIf="selectedChat" class="message-title">{{selectedChat.about.name}} </h4>
+      </div><!-- /message header -->
+      <!-- message body -->
+      <div class="message-body" #mess>
+        <!-- .card -->
+        <div class="card card-fluid mb-0">
+          <!-- .conversations -->
+          <div role="log" class="conversations">
+            <!-- .conversation-list -->
+
+            <ul class="conversation-list">
+              <!-- .conversation-divider -->
+              <li class="log-divider">
+              </li><!-- /.conversation-divider -->
+              <li *ngFor="let message of messages"
+                [ngClass]="isSendByMe(message) ? 'conversation-inbound' : 'conversation-outbound'"
+                class="conversation-faux">
+                <div class="conversation-message conversation-message-skip-avatar">
+                  <div class="conversation-message-text"> {{message.message}} </div>
+                  <div class="conversation-meta"> {{message.timestamp.toDate() | date :'medium'}} </div>
+
+                </div>
+              </li><!-- /.conversation-inbound -->
+            </ul><!-- /.conversation-list -->
+          </div><!-- /.conversations -->
+        </div><!-- /.card -->
+      </div><!-- /message body -->
+      <!-- message publisher -->
+      <div class="message-publisher">
+        <!-- form -->
+        <form (ngSubmit)="sendMessage(messageText)" #messageText="ngForm">
+          <!-- .media -->
+         <div class="media mb-1">
+        <!--    <div class="btn btn-light btn-icon fileinput-button">
+              <i class="fa fa-paperclip"></i> <input type="file" id="pm-attachment" name="pmAttachment[]" multiple="">
+            </div>
+         -->    <div class="media-body">
+              <input ngModel type="text" required class="form-control border-0 shadow-none" name="messageText"
+                placeholder="Type a message">
+                
+            </div>
+            <div>
+         <!--      <button type="button" class="btn btn-light btn-icon hidesm"><i class="far fa-smile"></i></button>
+          -->      <button  type="submit" class="btn btn-light btn-icon"><i class="far fa-paper-plane"></i></button>
+            </div>
+          </div><!-- /.media -->
+        </form><!-- /form -->
+      </div><!-- /message publisher -->
+    </div>
+
+  </div><!-- /.page-sidebar -->
+  <!-- Keep in mind that modals should be placed outsite of page sidebar -->
+  <!-- .modal -->
+
+
+</div>
+
+<div *ngIf="showAddModal" class="aside-backdrop show"></div>

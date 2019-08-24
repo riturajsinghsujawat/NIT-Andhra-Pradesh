@@ -1,0 +1,95 @@
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item ">
+            <a routerLink="/home" class="ml-3" > <i class="breadcrumb-icon fa fa-angle-left "> </i> Back </a>
+          </li>  
+        </ol>
+      </nav>
+    </header><!-- /.page-title-bar -->
+    <!-- .page-section -->
+    <div class="page-section">
+      <div class="row">
+          <div class="col-lg-6">
+              <!-- .card -->
+              <div class="card card-fluid">
+                <h6 class="card-header"> Requests For Your Projects </h6>
+                <ul class="sortable-lists list-group list-group-flush list-group-bordered" data-group="pages">
+                  <li  *ngFor="let request of projectRequests" class="list-group-item align-items-center">
+                    <ng-container *ngIf="request.user">
+                    
+                      <div class="list-group-item-figure">
+                          <div class="tile tile-circle bg-blue"> {{request.user.about.name.substring(0,1)}} </div>
+                        </div>
+                      <div class="list-group-item-body">
+                          <h4  class="list-group-item-title"> {{request.user.about.name}}  </h4>
+                          <p class="list-group-item-text"> (for : {{request.project_title}})     <b> Message :</b> {{request.message}} </p>
+                        </div>
+                      </ng-container>
+                    <div style="margin: 5px" class="btn-group ml-auto">
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-expanded="false"><i
+                            class="fa fa-ellipsis-v"></i></button>
+                        <div class="dropdown-arrow"></div>
+                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                          style="position: absolute; will-change: top, left; top: 36px; left: 36px;">
+                          <a [routerLink]="['/home/resumes',request.id_user]" class="dropdown-item">View Profile</a>
+                          <a (click)="accept(request)" class="dropdown-item h">Accept Request</a>
+                          <a (click)="reject(request)" class="dropdown-item h">Reject Request</a>
+                        </div>
+                      </div>
+    
+    
+                    </div>
+                  </li>
+                  <div style="text-align: center">  <h6 *ngIf="!projectRequests.length"> <br> No Records  </h6>
+                  </div>
+                  
+                </ul>
+              </div>
+            </div>                                                     
+            <div class="col-lg-6">
+              <!-- .card -->
+              <div class="card card-fluid">
+                <h6 class="card-header"> Requests For You </h6>
+                <ul class="sortable-lists list-group list-group-flush list-group-bordered" data-group="pages">
+                    <li   *ngFor="let req of userRequests" class="list-group-item align-items-center">
+                        <div class="list-group-item-figure">
+                            <div class="tile tile-circle bg-blue"> {{req.project_title.substring(0,1)}} </div>
+                          </div>
+                        <div class="list-group-item-body">
+                            <h4 class="list-group-item-title"> {{req.project_title}} </h4>
+                            <p class="list-group-item-text"> <b> Message :</b> {{req.message}} </p>
+                          </div>
+                    
+                      <div style="margin: 5px" class="btn-group ml-auto">
+                        <div class="dropdown">
+                          <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-expanded="false"><i
+                              class="fa fa-ellipsis-v"></i></button>
+                          <div class="dropdown-arrow"></div>
+                          <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                            style="position: absolute; will-change: top, left; top: 36px; left: 36px;">
+                            <a [routerLink]="['/home/projects',req.pid]" class="dropdown-item">View Project</a>
+                            <a (click)="acceptInvite(req)" class="dropdown-item h">Accept Request</a>
+                            <a (click)="reject(req)" class="dropdown-item h">Reject Request</a>
+                          </div>
+                        </div>
+      
+      
+                      </div>
+                    </li>
+                    <div style="text-align: center"> 
+      <h6 *ngIf="!userRequests.length"> <br> No Records  </h6>
+                    </div>
+                    
+                  </ul>
+              </div>                                     
+            </div>      
+      </div><!-- /.page-section -->
+    </div><!-- /.page-inner -->
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="page has-sidebar has-sidebar-expand-xl"><div class="sidebar-backdrop"></div>
+            <!-- .page-inner -->
+            <div class="page-inner">
+              
+              <!-- .page-section -->
+              <div class="page-section margin-sm"  >
+                <h3 class="ml-3"> Your Feeds</h3>
+                <h5 *ngIf="feeds.length==0" >You haven't added any feeds yet</h5>
+                <!-- .section-block -->
+                <div class="section-block">
+                  <app-singlefeed [feed]="feed" [admin]="true" *ngFor="let feed of feeds"></app-singlefeed>
+                </div><!-- /.section-block -->
+              </div><!-- /.page-section -->
+            </div><!-- /.page-inner -->
+          </div>

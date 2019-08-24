@@ -1,0 +1,36 @@
+ @media (max-width: 768px) { 
+    .margin-sm {
+        margin-top:-25px ;
+    } 
+    .pad {
+        padding-top:5.5rem;
+       }
+        .marginsm-header{
+            margin-top:-1.5rem;
+        }
+    
+        .marginsm-header-scroll {
+            margin-top:-4.6rem;
+        }
+    
+    
+        .hidesm {
+            display:none;
+           } 
+        
+
+  }
+
+  .scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    .img-slide {
+      display: inline-block;
+      height: 180px;
+      width:270px;
+      border-radius: 5px;
+    }
+ 
+  }

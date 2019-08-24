@@ -1,0 +1,25 @@
+         <div (swipedown)="reload($event)" (swiperight)="reload($event)" (pandown)="reload($event)"  class="app">
+          <!-- .app-header -->
+
+            <app-navbar></app-navbar> 
+
+          <!-- /.app-header -->
+          <!-- .app-aside -->
+          <aside class="app-aside app-aside-expand-md app-aside-light" [ngClass]="{'show': this.commonService.showaside}">       
+            <app-aside></app-aside>
+          </aside>
+          <!-- /.app-aside -->
+          <!-- .app-main -->
+          <main class="app-main">
+                
+            <!-- .wrapper -->
+            <div   [@routeAnimations]="prepareRoute(outlet)" class="wrapper marginsm"  >
+              <router-outlet #outlet="outlet" ></router-outlet>
+            </div>
+            <!-- <app-footer></app-footer> -->
+            <!-- /.wrapper -->
+          </main>
+          <!-- /.app-main -->
+          <div (click)="dismissAside()" class="aside-backdrop" [ngClass]="{'show': this.commonService.showaside}"></div>
+        </div>
+        <!-- /.app -->

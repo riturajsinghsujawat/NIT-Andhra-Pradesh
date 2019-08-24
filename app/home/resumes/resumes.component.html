@@ -1,0 +1,62 @@
+<div class="page has-sidebar has-sidebar-expand-lg"><div class="sidebar-backdrop"></div>
+        <!-- .page-inner -->
+         <div class="page-inner">
+         
+              <!-- .page-title-bar -->                                               
+              <div class="page-section"  >    
+                  <header class="page-navs bg-light shadow-sm" [ngClass]="{'marginsm-header-scroll': commonService.direction=='down', 'marginsm-header': commonService.direction!='down'}"  >
+                    <!-- .input-group -->
+                        <div class="input-group has-clearable" >
+                          <button type="button" (click)="resetSearch()" class="close" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+                          </button> 
+                          <label class="input-group-prepend" for="searchClients">
+                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                          </label>
+                          <input type="text" (click)="showkeyboard=false" style="font-size:13px !important;" (keyup.enter)="search()" [disabled]="showkeyboard==true" class="form-control" name="key" [(ngModel)]="key" type="text" class="form-control" placeholder="Search by Skill,Name,Experience,Education">
+                        </div><!-- /.input-group -->                 
+                  </header> 
+                 
+                  <!-- <button class="btn btn-danger btn-floated d-lg-none" type="button" data-toggle="sidebar"><i class="fa fa-filter" aria-hidden="true"></i></button> -->
+                  <div class="row mx-auto mt-3" *ngIf="mode=='list'">
+                        <div class="col-lg-6 col-md-12 " *ngFor="let item of resumeService.resumes">                  
+                          <app-resume-card [routerLink]="[item.docId]" [item]="item"></app-resume-card>                    
+                        </div>                   
+                  </div> 
+
+                  <div class="row mx-auto mt-3" *ngIf="mode=='search'">
+                    <h6 class="ml-2" *ngIf="showinfo">{{info}}</h6> 
+                    <div class="col-lg-6 col-md-12 " *ngFor="let item of searchResults">                                       
+                      <app-resume-card [routerLink]="[item.id]" [item]="item.data"></app-resume-card>                    
+                    </div>                   
+                  </div> 
+                     
+              <div
+                infiniteScroll
+                [infiniteScrollDistance]="2"
+                [infiniteScrollThrottle]="50"
+                (scrolled)="resumeService.getNextResumes()"
+                class="text-center">
+                  <div class="spinner-border text-primary" *ngIf="lazyloader" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>           
+              </div>    
+
+         </div>
+       <!-- .page-sidebar -->
+        <div class="page-sidebar">
+            <!-- .sidebar-header -->
+            <header class="sidebar-header d-sm-none marginsm">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item active">
+                            <a  onclick="Looper.toggleSidebar()"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
+                          </li>
+                        </ol>
+                      </nav>
+             </header><!-- /.sidebar-header -->
+           <!-- .sidebar-section -->
+        </div>
+       <!-- /.page-sidebar -->
+    </div>

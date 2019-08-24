@@ -1,0 +1,84 @@
+    <!-- .auth -->
+    <main class="auth">
+      <header id="auth-header" class="auth-header" style="background-image: url(assets/images/illustration/img-1.png);">
+        <h1>
+          <img src="assets/images/brand-inverse.png" alt="" height="72"> <span class="sr-only">Sign Up</span>
+        </h1>
+        <p> Already have an account? please <a routerLink="/auth/signin">Sign In</a>
+        </p>
+      </header><!-- form -->
+      <form class="auth-form" (ngSubmit)="signup(formData)" #formData="ngForm">
+        <!-- .form-group -->
+        <div class="form-group">
+          <div class="form-label-group">
+            <input ngModel name="email" type="email" id="email" style="text-transform:lowercase" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$" #email="ngModel" class="form-control" placeholder="Email" required > <label for="email">Email</label>
+            <div *ngIf="email.errors && (email.dirty )" class="alert alert-danger">
+              <div [hidden]="!email.errors.required">
+                Email is Required
+              </div>   
+              <div [hidden]="!email.errors.pattern">
+                Enter Valid Email 
+              </div>           
+            </div>
+          </div>
+        </div><!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group">
+          <div class="form-label-group">
+            <input ngModel name="name" minlength="3" type="text" id="name" class="form-control" #name="ngModel" placeholder="Full Name" required autofocus=""> <label for="name">Name</label>
+            <div *ngIf="name.errors && (name.dirty )" class="alert alert-danger">            
+              <div [hidden]="!name.errors.minlength">
+                Name must be atleast 3 characters long
+              </div>   
+              <div [hidden]="!name.errors.required">
+                Name is Required
+              </div>       
+            </div>
+          </div>
+        </div><!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group">
+          <div class="form-label-group">
+            <input ngModel name="phone"  pattern="^[6-9]\d{9}$" maxlength="10"  #phone="ngModel" class="form-control" placeholder="Phone" required autofocus=""> <label for="inputName">Phone</label>
+            <div *ngIf="phone.errors && (phone.dirty )" class="alert alert-danger">
+              <div [hidden]="!phone.errors.required">
+               Mobile Number is required
+              </div>            
+              <div [hidden]="!phone.errors.pattern">
+                Enter Valid Indian Mobile Number
+              </div>
+            </div>
+          </div>
+        </div><!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group">
+          <div class="form-label-group">
+            <input ngModel name="password" minlength="8" id="password" type="password" #password="ngModel" class="form-control" placeholder="Password" required> 
+            <label for="password">Password</label>
+            <div *ngIf="password.errors && (password.dirty)" class="alert alert-danger">            
+              <div [hidden]="!password.errors.minlength">
+                Password must be atleast 8 characters long
+              </div>   
+              <div [hidden]="!password.errors.required">
+                Password is Required
+              </div>       
+            </div>
+          </div>
+        </div><!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block" [disabled]="!formData.valid" type="submit">Sign Up</button>
+        </div><!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group text-center">
+          <div class="custom-control custom-control-inline custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="newsletter"> <label class="custom-control-label" for="newsletter">Sign me up for the newsletter</label>
+          </div>
+        </div>
+        <!-- /.form-group -->
+        <!-- recovery links -->
+        <p class="text-center text-muted mb-0"> By creating an account you agree to the <a >Terms of Use</a> and <a >Privacy Policy</a>. </p><!-- /recovery links -->
+      </form><!-- /.auth-form -->
+      <!-- copyright -->
+      <footer class="auth-footer"> © 2018 All Rights Reserved. </footer>
+    </main><!-- /.auth -->

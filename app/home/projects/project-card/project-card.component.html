@@ -1,0 +1,33 @@
+  <div class="card h"  >
+      <!-- .card-body -->
+      <div class="card-body">
+        <!-- team avatar -->
+        <div class="media align-items-center mb-3">
+          <a  class="user-avatar user-avatar-lg mr-3"><img src="assets/images/avatars/team4.jpg" alt=""></a>
+          <div class="media-body">
+            <h3 class="card-title" >
+              <a >{{project.title}}</a>
+            </h3>
+            <h6 class="card-subtitle text-muted"> {{project.stage}} </h6>
+          </div>        
+        </div><!-- /.media -->
+        <p>{{project.shortDescription}} </p><!-- /team avatar -->
+        <hr>
+        <!-- team rating -->
+        <!-- <p class="rating rating-sm">
+          <i class="fa fa-star text-yellow"></i> <i class="fa fa-star text-yellow"></i> <i class="fa fa-star text-yellow"></i> <i class="fa fa-star text-yellow"></i> <i class="far fa-star text-yellow"></i>
+        </p> --><!-- /team rating -->
+        <!-- team details -->
+          <ul class="list-icons mb-3">
+            <li>
+              <span class="list-icon"><span class="fa fa-map-marker text-muted"></span></span> {{project.location}} </li>
+            <li>
+              <span class="list-icon"><span class="fa fa-flag text-muted"></span></span> Since {{project.createdOn.toDate() | date}} </li>
+          </ul>
+        <!-- /team details -->
+        <!-- team members -->
+        <!-- /team members -->
+      </div><!-- /.card-body -->
+  
+
+    </div>

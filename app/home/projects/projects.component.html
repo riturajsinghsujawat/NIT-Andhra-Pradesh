@@ -1,0 +1,369 @@
+<div>
+  
+  <div class="page has-sidebar has-sidebar-expand-lg">
+    
+    <!-- .page-navs -->
+    <nav class="page-navs hidelg">
+        <!-- .nav-scroller -->
+        <div class="nav-scroller">
+          <!-- .nav -->
+          <div class="nav nav-tabs">
+            <a class="nav-link active show" (click)="getProjects()" data-toggle="tab"> All Projects </a> 
+            <!--  <a class="nav-link" (click)="myProjects()" data-toggle="tab"> My Projects </a> -->            
+          </div><!-- /.nav -->
+        </div><!-- /.nav-scroller -->
+      </nav><!-- /.page-navs -->
+
+    <div class="page-inner margin-sm " >
+          <!-- .page-title-bar -->
+          <header class="page-title-bar">
+            <nav aria-label="breadcrumb" class="hidesm">
+              <ol class="breadcrumb ">               
+                <li class="margin-left">
+                  <button *ngIf="projectService.mode=='all' || projectService.mode=='add' "  class="btn btn-sm btn-success ml-1" type="button" (click)="myProjects()">My Projects</button>              
+                  <button *ngIf="projectService.mode=='add' || projectService.mode=='myprojects'"  class="btn btn-sm btn-success ml-1" type="button" (click)="getProjectsModeAll()">All Projects</button>  
+                  <button *ngIf="projectService.mode=='all' || projectService.mode=='myprojects'"  class="btn btn-sm btn-success ml-1" type="button" (click)="addProject()">Add Project</button>        
+                </li>      
+              </ol>                                                                
+             </nav>                               
+          </header><!-- /.page-title-bar -->
+          <!-- .page-section -->
+          <div class="page-section">
+                  <!-- <button class="btn btn-danger btn-floated d-lg-none" type="button" data-toggle="sidebar"><i class="fa fa-filter" aria-hidden="true"></i></button>    -->                 
+
+                  <div *ngIf="projectService.mode=='all'">
+                      <div class="row">
+                        <!-- grid column -->
+                        <div  class="col-lg-6 col-xl-6"  *ngFor="let project of projects">
+                          <app-project-card [routerLink]="[project.docId]" [project]="project"></app-project-card>
+                        </div><!-- /grid column -->
+                    </div>
+                  </div>
+
+                  <div *ngIf="projectService.mode=='myprojects'" >
+                      <button  class="btn btn-sm btn-success ml-3 mt-1 mb-2 hidelg" type="button" (click)="addProject()">Add Project</button>        
+                        <h4 *ngIf="myprojects.length==0" >You Haven't Added any Project yet !</h4> 
+                          <div class="row">          
+                            <div  class="col-lg-6 col-xl-6" *ngFor="let project of myprojects">
+                                <app-project-card [project]="project" [routerLink]="[project.docId]" ></app-project-card>
+                            </div>   
+                          </div>                  
+                        <div class="modal fade has-shown show" *ngIf="toggledeleteProject"  style="display:block;padding:15px;" >
+                          <!-- .modal-dialog -->
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <!-- .modal-content -->
+                                <div class="modal-content">
+                                              <!-- .modal-header -->
+                                              <div class="modal-header">
+                                                <h5 class="modal-title"> Do you really want to delete this project ? </h5>
+                                              </div>
+                                              <!-- /.modal-header -->
+                                              <!-- .modal-body -->
+                                            <div class="modal-body">  
+                                              Note: Once deleted cannot be recovered                         
+                                          </div>
+                                        <!-- /.modal-body -->
+                                        <!-- .modal-footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" (click)="toggledeleteproject=!toggledeleteproject">Close</button>                  
+                                            <button type="submit" class="btn btn-light" (click)="deleteProject(project)" > Delete </button>
+                                        </div>
+                                        <!-- /.modal-footer -->
+                                </div>
+                              </div>
+                          <!-- /.modal-dialog -->
+                        </div>      
+                  </div>               
+
+                  <div *ngIf="projectService.mode=='add'">
+                      <div class="card">
+                          <!-- .card-body -->
+                          <div class="card-body">
+                            <!-- .form -->
+                            <form (ngSubmit)="save(projectForm)"  onkeydown="return event.key != 'Enter';" #projectForm="ngForm">
+                              <!-- .fieldset -->
+                              <fieldset>
+
+                                <legend>Overview</legend> <!-- .form-group -->
+                                      <div class="form-group">
+                                        <label for="lbl1"> Project name <abbr title="Required">*</abbr></label> <input type="text" name="title" [(ngModel)]="project.title" class="form-control"  placeholder="" required> 
+                                      </div><!-- /.form-group -->
+
+                                      <div class="form-group">
+                                          <label for="lbl1"> Short Description <abbr title="Required">*</abbr></label> <input type="text" name="shortDescription" [(ngModel)]="project.shortDescription" class="form-control"  placeholder="Write in approx 30 words" required> 
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="lbl1"> Location <abbr title="Required">*</abbr></label> <input type="text" name="location" [(ngModel)]="project.location" class="form-control"  placeholder="City e.g. Delhi" required> 
+                                          </div>
+                                      
+                                          <div class="form-group">
+                                              <label for="lbl1"> Stage <abbr title="Required"> * </abbr></label> 
+                                              <select class="custom-select d-block w-100"  [(ngModel)]="project.stage" name="stage" required>                                                                               
+                                                <option > Idea </option> 
+                                                <option > Prototype </option>
+                                                <option > Developed </option>
+                                                <option > Commercially running </option>                                                                               
+                                              </select>
+                                            </div>        
+                                      
+                                      <div class="form-group">
+                                        <label for="lbl1"> What Inspired you for this project? <abbr title="Required">*</abbr></label> <textarea type="text" name="inspiration" [(ngModel)]="project.inspiration" class="form-control"  placeholder="" required> </textarea>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                        <label for="pi10">Technology you will use ?</label> <!-- .input-group -->
+                                        <div class="input-group">
+                                          <label class="input-group-prepend" ><span class="badge" *ngFor="let tech of project.builtWith"> {{tech}} <a (click)="deleteTech(tech)"> × </a></span> </label>
+                                          <input type="text" (keyup.enter)="addTech(tech)"  name="tech" [(ngModel)]="tech" class="form-control">  <span> <i (click)="addTech(tech)" style="font-size:20px;"  class="mt-2 mr-1 fa fa-plus-circle"></i></span>
+                                        </div><!-- /.input-group -->
+                                      </div>
+                    
+
+                                      <div class="form-group">
+                                        <label for="lbl1"> What it will do  ? <abbr title="Required">*</abbr></label> <textarea type="text" name="whatitdoes" [(ngModel)]="project.whatitdoes" class="form-control"  placeholder="Please write it in approx 100 words" required> </textarea>
+                                      </div>                                  
+                                    
+                                      <div class="form-group">
+                                        <label for="lbl1"> What is the work done so far ? <abbr title="Required">*</abbr></label> <textarea type="text" name="accomplishments" [(ngModel)]="project.accomplishments" class="form-control"  placeholder="" required> </textarea>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="lbl1"> What one can learn while doing this project ? <abbr title="Required">*</abbr></label> <textarea type="text" name="learnings" [(ngModel)]="project.learnings" class="form-control"  placeholder="" required> </textarea>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="lbl1"> What can be commercial viabilty of the project , if any  ? </label> <textarea type="text" name="commercial" [(ngModel)]="project.commercial" class="form-control"  placeholder="" > </textarea>
+                                      </div>   
+
+                                      <div class="form-group">
+                                        <label for="lbl1"> Budget of Project  ? </label> <textarea type="text" name="budget" [(ngModel)]="project.budget" class="form-control"  placeholder="" > </textarea>
+                                      </div>   
+                                      
+                                      
+                              </fieldset><!-- /.fieldset -->
+                              
+
+                              <button type="submit" [disabled]="!projectForm.valid" class="btn btn-primary"> Save </button>
+                            </form><!-- /.form -->
+
+
+                          </div><!-- /.card-body -->
+                        </div>
+                  </div>
+
+                  <div *ngIf="projectService.mode=='edit'">
+                      <div class="card">
+                          <!-- .card-body -->
+                          <div class="card-body">
+                            <!-- .form -->
+                            <form (ngSubmit)="save(projectForm)"  onkeydown="return event.key != 'Enter';" #projectForm="ngForm">
+                              <!-- .fieldset -->
+                              <fieldset>
+
+                                <legend>Overview</legend> <!-- .form-group -->
+                                      <div class="form-group">
+                                        <label for="lbl1"> Project name <abbr title="Required">*</abbr></label> <input type="text" name="title" [(ngModel)]="project.title" class="form-control"  placeholder="" required> 
+                                      </div><!-- /.form-group -->
+
+                                      <div class="form-group">
+                                          <label for="lbl1"> Short Description <abbr title="Required">*</abbr></label> <input type="text" name="shortDescription" [(ngModel)]="project.shortDescription" class="form-control"  placeholder="Write in approx 30 words" required> 
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="lbl1"> Location <abbr title="Required">*</abbr></label> <input type="text" name="location" [(ngModel)]="project.location" class="form-control"  placeholder="City e.g. Delhi" required> 
+                                          </div>
+                                      
+                                          <div class="form-group">
+                                              <label for="lbl1"> Stage <abbr title="Required"> * </abbr></label> 
+                                              <select class="custom-select d-block w-100"  [(ngModel)]="project.stage" name="stage" required>                                                                               
+                                                <option > Idea </option> 
+                                                <option > Prototype </option>
+                                                <option > Developed </option>
+                                                <option > Commercially running </option>                                                                               
+                                              </select>
+                                            </div>        
+                                      
+                                      <div class="form-group">
+                                        <label for="lbl1"> What Inspired you for this project? <abbr title="Required">*</abbr></label> <textarea type="text" name="inspiration" [(ngModel)]="project.inspiration" class="form-control"  placeholder="" required> </textarea>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                        <label for="pi10"> Technology you will use ?</label> <!-- .input-group -->
+                                        <div class="input-group">
+                                          <label class="input-group-prepend" ><span class="badge" *ngFor="let tech of project.builtWith"> {{tech}} <a (click)="deleteTech(tech)"> × </a></span> </label>
+                                          <input type="text" (keyup.enter)="addTech(tech)"  name="tech" [(ngModel)]="tech" class="form-control">  <span> <i (click)="addTech(tech)" style="font-size:20px;"  class="mt-2 mr-1 fa fa-plus-circle"></i></span>
+                                        </div><!-- /.input-group -->
+                                      </div>
+                    
+
+                                      <div class="form-group">
+                                        <label for="lbl1"> What it will do  ? <abbr title="Required">*</abbr></label> <textarea type="text" name="whatitdoes" [(ngModel)]="project.whatitdoes" class="form-control"  placeholder="Please write it in approx 100 words" required> </textarea>
+                                      </div>                                  
+                                    
+                                      <div class="form-group">
+                                        <label for="lbl1"> What is the work done so far ? <abbr title="Required">*</abbr></label> <textarea type="text" name="accomplishments" [(ngModel)]="project.accomplishments" class="form-control"  placeholder="" required> </textarea>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="lbl1"> What one can learn while doing this project ? <abbr title="Required">*</abbr></label> <textarea type="text" name="learnings" [(ngModel)]="project.learnings" class="form-control"  placeholder="" required> </textarea>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="lbl1"> What can be commercial viabilty of the project , if any  ? </label> <textarea type="text" name="commercial" [(ngModel)]="project.commercial" class="form-control"  placeholder="" > </textarea>
+                                      </div>   
+
+                                      <div class="form-group">
+                                        <label for="lbl1"> Budget of Project  ? </label> <textarea type="text" name="budget" [(ngModel)]="project.budget" class="form-control"  placeholder="" > </textarea>
+                                      </div>   
+                                      
+                                      
+                              </fieldset><!-- /.fieldset -->
+                              
+
+                              <button type="submit" [disabled]="!projectForm.valid" class="btn btn-primary"> Save </button>
+                            </form><!-- /.form -->
+
+
+                          </div><!-- /.card-body -->
+                        </div>
+                  </div>
+                 
+            
+              
+                  <div class="modal fade has-shown show" *ngIf="toggleApplyProject"  style="display:block;padding:15px;" >
+                    <!-- .modal-dialog -->
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <!-- .modal-content -->
+                      <div class="modal-content">
+                                    <!-- .modal-header -->
+                                    <div class="modal-header">
+                                      <h5 class="modal-title"> Apply Project </h5>
+                                    </div>
+                                    <!-- /.modal-header -->
+                                    <!-- .modal-body -->
+                                  <div class="modal-body">                                                   
+                                              <fieldset>      
+                                                    <!-- .form-group -->
+                                                    <div class="form-group">
+                                                      <label for="lbl1"> Why should you be involved in the project ?
+                                                        <abbr title="Required">*</abbr>
+                                                      </label>
+                                                      <textarea  name="message"  class="form-control" [(ngModel)]="appliance.message" id="lbl3" rows="3" placeholder="Your Answer"></textarea>
+                                                    </div>
+                                                    <!-- /.form-group -->
+                                                                        
+                                                </fieldset>                       
+                                          
+                                            <!-- .modal-footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" (click)="toggleApplyProject = false" >Close</button>
+                                              
+                                                <button type="submit" class="btn btn-light" (click)="Apply()" >Save</button>
+                                            </div>
+                                            <!-- /.modal-footer -->
+                                      
+                                  </div>
+                      </div>
+                  </div><!-- /.modal-dialog -->
+                  </div>
+         </div>
+     </div>
+
+<!--       <div class="page-sidebar">
+      
+        <header class="sidebar-header d-sm-none marginsm">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active">
+                <a  onclick="Looper.toggleSidebar()"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
+              </li>
+            </ol>
+          </nav>
+        </header>
+        
+        <div class="sidebar-section">
+          <button type="button" class="close mt-n1 d-none d-xl-none d-sm-block" onclick="Looper.toggleSidebar()"
+            aria-label="Close"><span aria-hidden="true">×</span></button>
+            <ng-container  style="padding-bottom: 30px">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <label for="lbl1"> <b> Sort By </b> </label>
+
+                  </div>                                                                                                 
+
+                    <select style="width: 65%"  (change)="getByOrder()" [(ngModel)]="sortby" class="custom-select d-block w-80" name="stage">
+                        <option value=""> Default</option>
+                      <option value="nameAsc"> Name </option>
+                      <option value ="nameDes"> Name (Desc)  </option>
+                      <option value="createdAsc"> Latest </option>
+                      <option value="createdDes"> Oldest </option>
+                    
+                    </select>
+                  
+              </li>        
+            </ng-container>
+          <hr>
+
+          <ul class="list-group mb-3" style="padding: 10px">
+              <h6 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"> Filter By : </h6>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <label for="lbl1"> Stage</label>
+
+                </div>
+                <div>
+
+                  <select     [(ngModel)]="selectedStage"class="custom-select d-block w-80" name="stage">
+                    <option> All </option>
+                    <option> Idea </option>
+                    <option> Prototype </option>
+                    <option> Developed </option>
+                    <option> Commercially running </option>
+                  </select>
+                </div>
+                </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <label for="lbl1"> Location  </label>
+                  </div>
+                  <div  style="width: 65%">
+                      <input type="text"
+                      name="title" class="form-control" placeholder="Location" required>
+                    
+                  </div>
+      
+      
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div style="margin-right: 2px">
+                      <label for="lbl1"> Technology  </label>
+                    </div>
+                    <div style="width: 65%">
+                        <input type="text" [(ngModel)]="selectedTechnology"
+                        name="title" class="form-control" placeholder="Technology" required>
+                      
+                    </div>
+        
+        
+              </li>              
+              <div style="align-content: center">
+
+                <button  onclick="Looper.toggleSidebar()" (click)="resetFilter()" style="float:right;margin: 5% "   class="btn btn-primary"> Reset </button>  
+
+                <button  onclick="Looper.toggleSidebar()" (click)="getByFilter()" style="float:right;margin: 5% "  class="btn btn-primary"> Apply </button>      
+              </div>                                                   
+          </ul>
+        </div>
+      </div> -->
+
+</div>
+
+<div *ngIf="toggleApplyProject" class="aside-backdrop show"></div>
+<div *ngIf="toggledeleteProject" class="aside-backdrop show"></div>
+</div>
+
+<div hidden="true" class="container">
+  <p>This feature is coming soon!</p>
+  <p>You will be able to list your Startup,Project,Idea here to manage them,Add Milestones, Add more Students to your Team, Apply to work on a project etc.</p>
+</div>

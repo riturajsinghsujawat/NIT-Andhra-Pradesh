@@ -1,0 +1,94 @@
+
+<div class="page">
+    <!-- .page-inner -->
+    <div class="page-inner">
+            <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item ">
+                        <a routerLink="/home" class="ml-3" > <i class="breadcrumb-icon fa fa-angle-left "> </i> Back </a>
+                      </li>                    
+                    </ol>                   
+            </nav>
+      <!-- .page-title-bar -->
+      <header class="page-title-bar">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="d-flex flex-column flex-md-row">
+                        <p class="lead">
+                            <span class="text-muted"> Hi, {{blogService.authService.resume.about.name}}.</span> <span class="d-block text-muted">Here’s what’s happening with your business today.</span>
+                        </p>
+                        <div class="ml-auto">                       
+                            <div class="el-example">
+                                <button *ngIf="mode=='add' || mode=='edit'" (click)="save()" class="btn btn-success"><span>Save</span></button>
+                                <button *ngIf="mode=='add' || mode=='edit'" (click)="listBlogs()" class="btn btn-primary"><span>All Blogs</span></button>
+                                <button *ngIf="mode=='list'" (click)="addBlog()" class="btn btn-primary"><span>New Blog</span></button>                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </header>
+      <!-- .page-section -->
+      <div class="page-section">
+        <ng-container *ngIf="mode=='add' || mode=='edit'">
+            <div class="row">
+                <div class="col-lg-9">
+                    <!--         <form> -->
+                    <!-- .fieldset -->
+                    <fieldset>
+                            <div class="form-group">
+                            <label for="tf1">Enter Title of Blog</label> <input [(ngModel)]="singleBlog.title" type="text" class="form-control" id="tf1" aria-describedby="tf1Help" placeholder="e.g. This is First Blog"> <small id="tf1Help" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div><!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group">
+                            <label for="tf3">Cover Image</label>
+                            <div class="custom-file">
+                                <input (change)="choosefiles($event)" type="file" class="custom-file-input" id="tf3"> <label class="custom-file-label" for="tf3">Choose file</label>
+                                <div *ngIf="percentage && percentage!=100" class="progress mb-4">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width':percentage+'%'}"></div>
+                                </div>
+                                <div *ngIf="imgsrc" class="list-group-item list-group-item-action">
+                                    <div class="list-group-item-figure">
+                                        <img height="50px;" src="{{imgsrc|async}}">
+                                    </div>
+                                    <div class="list-group-item-body">
+                                    <span class="list-group-item-text">{{singleBlog.cover}}</span>
+                                    </div>
+                                    <div (click)="delCover()" class="list-group-item-figure">
+                                        <span class="fa fa-lg fa-fw fa-times"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            </div><!-- /.form-group -->
+                    </fieldset><!-- /.fieldset -->
+                    <!--         </form> -->
+                    <editor height="1000px;" [(ngModel)]="singleBlog.content" apiKey="test" [init]="{plugins: 'link'}"></editor>
+                </div>
+                <div class="col-lg-3">
+                    <!-- // blank -->
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="mode=='list'">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="card card-fluid">
+                        <div class="card-header drag-handle"> Your Blogs </div><!-- .sortable-lists -->
+                        <ul class="sortable-lists list-group list-group-flush list-group-bordered" data-toggle="sortable" data-group="pages">
+                          <li *ngFor="let blog of blogs" class="list-group-item align-items-center drag-handle">
+                            <span class="drag-indicator"></span>
+                            <div> {{blog.title}} </div>
+                            <div class="btn-group ml-auto">
+                              <button (click)="editBlog(blog)" class="btn btn-sm btn-secondary">Edit</button> <button (click)="delBlog(blog)" class="btn btn-sm btn-secondary"><i class="far fa-trash-alt"></i></button>
+                            </div>
+                          </li>
+                        </ul><!-- /.sortable-lists -->
+                      </div>
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
+        </ng-container>        
+      </div><!-- /.page-section -->
+    </div><!-- /.page-inner -->
+</div>
+  

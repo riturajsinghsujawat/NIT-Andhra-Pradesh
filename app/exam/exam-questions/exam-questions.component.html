@@ -1,0 +1,112 @@
+
+  <!-- .app-main -->
+  <main class="app-main">
+    <!-- .wrapper -->
+    <div class="wrapper">
+      <!-- .page -->
+      <div class="page has-sidebar has-sidebar-expand-lg" [ngClass]="{'has-sidebar-open': sidebar_open}">
+          <!-- .page-inner -->
+          <div class="page-inner">
+            <!-- .page-title-bar -->
+            <header class="page-title-bar">
+<!--                 <div class="page-title"><p class="text-right">Time Left : 01:25:23 </p></div> -->
+              <button (click)="sidebar_open=!sidebar_open" class="btn btn-danger btn-floated d-lg-none" type="button"><i class="fa fa-th-list"></i></button>
+            </header><!-- /.page-title-bar -->
+            <div class="row">
+              <div class="col-md-offset-11 col-md-1">
+                Timer {{hours}}:{{min}}:{{sec}}
+              </div>
+            </div>
+            <!-- .page-section -->
+            <div class="page-section">
+              <div class="section-block">
+                <!-- .card -->
+                <div class="card">
+                    <!-- .card-header -->
+                  <div class="card-header">
+                      <h6>Que {{qIndex}}.{{[quesString]}} </h6>
+                  </div><!-- /.card-header -->
+                    <!-- .card-body -->
+                    <div class="card-body">
+                      <form >
+                          <div class="form-group" >
+                              <label>Select your answer</label>
+                              
+                                <div class="custom-control custom-radio">                                  
+                                  <input type="radio" class="custom-control-input" name="optSelected" id="option1" [(ngModel)]="choosedoption" [(value)]="option1"[checked]="choosedoption==option1">
+                                  <label class="custom-control-label" for="option1">{{option1}}</label>
+                                </div>
+                                <div class="custom-control custom-radio">                                  
+                                  <input type="radio" class="custom-control-input" name="optSelected" id="option2" [(ngModel)]="choosedoption" [(value)]="option2"[checked]="choosedoption==option2">
+                                  <label class="custom-control-label" for="option2">{{option2}}</label>
+                                </div>
+                                <div class="custom-control custom-radio">                                  
+                                  <input type="radio" class="custom-control-input" name="optSelected" id="option3" [(ngModel)]="choosedoption" [(value)]="option3"[checked]="choosedoption==option3">
+                                  <label class="custom-control-label" for="option3">{{option3}}</label>
+                                </div>
+                                <div class="custom-control custom-radio">                                  
+                                  <input type="radio" class="custom-control-input" name="optSelected" id="option4" [(ngModel)]="choosedoption" [(value)]="option4" [checked]="choosedoption==option4">
+                                  <label class="custom-control-label" for="option4">{{option4}}</label>
+                                </div>
+                              
+                            </div><!-- /.form-group -->
+                      </form>
+                        
+                          <hr class="mt-5">
+                          <div class="d-flex">
+                            <button type="button" [disabled]="qIndex==1" class="prev btn btn-secondary"  (click)="onPrevious()">Previous</button>
+                            <button type="button" [disabled]="qIndex==totalQuestion"class="next btn btn-primary ml-auto" (click)="onNext()">Next</button>
+                            
+                          </div>
+                    </div><!-- /.card-body -->
+                  </div><!-- /.card -->
+                  
+                  <div class="card">
+                    <button  type="button" class=" btn btn-primary " (click)="onSubmit()">Submit</button>
+                  </div>
+                  
+              </div>
+            </div>
+            <!-- /.page-section -->
+            
+          </div><!-- /.page-inner -->
+            <!-- .page-sidebar -->
+            <div class="page-sidebar">
+              <!-- .sidebar-header -->
+              <header class="sidebar-header d-sm-none">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">
+                      <a (click)="sidebar_open=false"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
+                    </li>
+                  </ol>
+                </nav>
+              </header><!-- /.sidebar-header -->
+              <!-- .sidebar-section -->
+              <div class="sidebar-section">
+                <button type="button" class="close mt-n1 d-none d-xl-none d-sm-block" onclick="Looper.toggleSidebar()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                
+                <div class="card">
+                  <div class="card-header">
+                    <h6>Select your Question from Here</h6>
+                  </div>
+                  <div class="card-body" *ngFor="let question of questions;let i=index">
+                    <button class="btn btn-primary" style="cursor: pointer" (click)="onClick(i+1)">
+                      {{i+1}}
+                      </button> 
+                  </div>
+                  
+                </div>
+                
+                
+            
+                
+              </div><!-- /.sidebar-section -->
+            </div><!-- /.page-sidebar -->
+        </div><!-- /.page -->
+    </div>
+    <!--<app-footer></app-footer>--> 
+    <!-- /.wrapper -->
+  </main>
+  <!-- /.app-main -->
+<!-- /.app -->

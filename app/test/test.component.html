@@ -1,0 +1,210 @@
+<nav style="height:40px" class="navbar navbar-expand navbar-dark fixed-top bg-dark"></nav>
+      
+<main class="app-main" style="margin-top:-40px;" >
+              <div class="wrapper">
+                  <!-- .page -->
+                  <div class="page has-sidebar has-sidebar-expand-lg" [ngClass]="{'has-sidebar-open': sidebar_open}" ><div class="sidebar-backdrop"></div>
+                    <!-- .page-inner -->
+                    <div class="page-inner"  >
+                      <header class="page-title-bar">          
+                        <button *ngIf="mode=='started' && questions.length!=0 "   (click)="sidebar_open=!sidebar_open"  class="btn btn-danger btn-floated d-lg-none" type="button" ><i class="fa fa-th-list"></i></button>
+                      </header>
+                     
+
+                        <ng-container class="section-block" *ngIf="mode=='details' && testdetails" >                             
+                                  <div class="card card-fluid pb-3 ml-8">
+                                    <p class="card-header inline">
+                                     Test Name :  {{testdetails.name}}                                    
+                                    </p>    
+                                    <p class="card-header inline">                                      
+                                       Test Duration : {{testdetails.duration}}
+                                       </p>                                                                      
+                                      <!-- .lits-group -->
+                                      <div class="lits-group list-group-flush">
+                                            <!-- .lits-group-item -->
+                                            <div class="list-group-item">                        
+                                              <!-- .lits-group-item-body -->
+                                              <div class="list-group-item-body">
+                                                <h5 class="card-title">
+                                                  <h6> Description : </h6>
+                                                </h5>
+                                                <p class="card-subtitle text-muted mb-1"> {{testdetails.description}} </p><!-- .progress -->
+                                              </div><!-- .lits-group-item-body -->
+                                            </div><!-- /.lits-group-item --> <hr>   
+                                            <!-- .lits-group-item -->
+                                            <div class="list-group-item">                        
+                                                <!-- .lits-group-item-body -->
+                                                <div class="list-group-item-body">
+                                                  <h5 class="card-title">
+                                                    <h6> Instructions : </h6>
+                                                  </h5>
+                                                  <p class="card-subtitle text-muted mb-1"> {{testdetails.instructions}} </p><!-- .progress -->
+                                                </div><!-- .lits-group-item-body -->
+                                              </div><!-- /.lits-group-item -->                                  
+                                        </div><!-- /.lits-group -->
+                                        <div class="card-footer">
+                                            <button  class="btn btn-sm btn-success mt-1 mb-1 mr-2 ml-auto green" type="button" (click)="startTest()"> Start Test</button>
+                                        </div>
+                                  </div>                             
+                          </ng-container>
+
+                    <!-- .page-section -->
+                    <div class="page-section">
+                        <ng-container *ngIf="mode=='started' && questions.length!=0">
+                            <div class="row">
+                                <div class="ml-4">
+                                 <h5> Timer : {{timeLeft}} </h5>
+                                 </div>
+                              </div>
+                            <div class="section-block">
+                              <!-- .card -->
+                              <div class="card">
+                                  <!-- .card-header -->
+                                <div class="card-header">
+                                    <h6> Question {{i+1}} . {{question.question}}  </h6>                                 
+                                </div><!-- /.card-header -->
+                                  <!-- .card-body -->
+                                  <div class="card-body" >
+                                      <div class="custom-control custom-switch float-right" >
+                                          <input type="checkbox" [checked]="question.flag2" (change)="question.flag2=!question.flag2" class="custom-control-input" id="customSwitch1"> <label class="custom-control-label" for="customSwitch1">Review</label>
+                                     </div>
+                                    <form >
+                                        <div class="form-group"  >
+                                            <label>Select your answer</label>
+                                            
+                                              <div class="custom-control custom-radio mt-3" >                                  
+                                                <input type="radio"  (change)="question.flag1=1" [(ngModel)]="question.selected" [value]="question.option1" name="selected" [id]="question.docId+'1'" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="question.docId+'1'">{{question.option1}}</label>
+                                              </div>
+                                              <div class="custom-control custom-radio mt-3">                                  
+                                                <input type="radio" (change)="question.flag1=1" [(ngModel)]="question.selected" [value]="question.option2" name="selected" [id]="question.docId+'2'" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="question.docId+'2'">{{question.option2}}</label>
+                                              </div>
+                                              <div class="custom-control custom-radio mt-3">                                  
+                                                <input type="radio" (change)="question.flag1=1" [(ngModel)]="question.selected" [value]="question.option3" name="selected" [id]="question.docId+'3'" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="question.docId+'3'">{{question.option3}}</label>
+                                              </div>
+                                              <div class="custom-control custom-radio mt-3">                                  
+                                                <input type="radio" (change)="question.flag1=1" [(ngModel)]="question.selected" [value]="question.option4" name="selected" [id]="question.docId+'4'" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="question.docId+'4'">{{question.option4}}</label>
+                                              </div>
+                                            
+                                          </div><!-- /.form-group -->
+                                    </form>                  
+                                        <hr class="mt-5">
+                                        <div class="d-flex">
+                                          <button class="btn btn-primary " *ngIf="i>0" (click)="previous()"> Previous </button>
+                                          <button class="btn btn-primary ml-auto " *ngIf="i<queslength" (click)="next()"> Next </button>                      
+                                        </div>
+                                  </div><!-- /.card-body -->
+                                </div><!-- /.card -->                              
+                                <div class="card">
+                                  <button class="btn btn-primary btn-block" (click)="togglemodalfinish=!togglemodalfinish"> Finish </button>
+                                </div>                       
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="mode=='result' && questions.length!=0">
+                          <div>
+                            <h5 class="ml-3"> Your Score is {{correct}}</h5>
+                          </div>
+                            <div class="section-block">
+                                <!-- .card -->
+                                <div class="card" *ngFor="let question of questions;let i=index" >
+                                    <!-- .card-header -->
+                                  <div class="card-header" [ngClass]="{'red': question.selected!=question.answer,'green2':question.selected==question.answer}">
+                                      <h6> Question {{i+1}} . {{question.question}}  </h6>                                 
+                                  </div><!-- /.card-header -->
+                                    <!-- .card-body -->
+                                    <div class="card-body">
+                                        <div class="float-right" >
+                                           <p> <b> Correct answer </b> : {{question.answer}} </p>
+                                       </div>
+                                      <form >
+                                          <div class="form-group" >
+                                              <label> Select your answer </label>
+                                              
+                                                <div class="custom-control custom-radio">                                  
+                                                  <input type="radio" disabled [(ngModel)]="question.selected" [value]="question.option1" name="selected" [id]="question.docId+'1'" class="custom-control-input">
+                                                  <label class="custom-control-label" [for]="question.docId+'1'">{{question.option1}}</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">                                  
+                                                  <input type="radio"  disabled [(ngModel)]="question.selected" [value]="question.option2" name="selected" [id]="question.docId+'2'" class="custom-control-input">
+                                                  <label class="custom-control-label" [for]="question.docId+'2'">{{question.option2}}</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">                                  
+                                                  <input type="radio"  disabled [(ngModel)]="question.selected" [value]="question.option3" name="selected" [id]="question.docId+'3'" class="custom-control-input">
+                                                  <label class="custom-control-label" [for]="question.docId+'3'">{{question.option3}}</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">                                  
+                                                  <input type="radio"  disabled [(ngModel)]="question.selected" [value]="question.option4" name="selected" [id]="question.docId+'4'" class="custom-control-input">
+                                                  <label class="custom-control-label" [for]="question.docId+'4'">{{question.option4}}</label>
+                                                </div>
+                                              
+                                            </div><!-- /.form-group -->
+                                      </form>                                                            
+                                    </div><!-- /.card-body -->
+                                  </div><!-- /.card -->                                                                                      
+                              </div>
+                      </ng-container>    
+                    </div>
+                    <!-- /.page-section -->
+                    </div><!-- /.page-inner -->
+                    <!-- .page-sidebar -->
+                    <div class="page-sidebar"  *ngIf="mode=='started' && questions.length!=0 ">
+                      <!-- .sidebar-header -->
+                      <header class="sidebar-header d-sm-none">
+                        <nav aria-label="breadcrumb">
+                          <ol class="breadcrumb">
+                            <li class="breadcrumb-item active">
+                              <a (click)="sidebar_open=false" ><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Back</a>
+                            </li>
+                          </ol>
+                        </nav>
+                      </header><!-- /.sidebar-header -->
+                      <!-- .sidebar-section -->
+                      <div class="sidebar-section">
+                        <button type="button" class="close mt-n1 d-none d-xl-none d-sm-block" onclick="Looper.toggleSidebar()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <div class="card">
+                            <div class="card-header">
+                              <h6>Select your Question from Here</h6>                               
+                            </div>          
+                            <div class="card-body" >
+                                    <p class="text-muted">Answered & Marked for Review : <span style="color:orange"> Orange </span>  <p>
+                                    <p class="text-muted">Answered & Not Marked for Review : <span style="color:green"> Green </span>  <p>
+                                    <p class="text-muted"> Not Answered & Marked for Review : <span style="color:purple"> Purple </span>  <p>
+                                    <p class="text-muted"> Not Answered & Not Marked for Review : <span style="color:red"> Red </span>  <p>
+                                <div class="el-example">
+                                    <button type="button"  onclick="Looper.toggleSidebar()" *ngFor="let question of questions;let i=index" (click)="toquestion(i)"  class="btn btn-primary" style="background-color:red" [ngClass]="{'reviewlater':question.flag1==1 && question.flag2==1,'both':question.flag1==0 && question.flag2==1,'green':question.flag1==1 && question.flag2==0}" >{{i+1}}</button>                   
+                                  </div>
+                            </div>              
+                          </div>            
+                      </div><!-- /.sidebar-section -->
+                    </div><!-- /.page-sidebar -->
+                  </div><!-- /.page -->
+                </div>
+                <div class="modal fade has-shown show" *ngIf="togglemodalfinish"  style="display:block;padding:15px;" >
+                    <!-- .modal-dialog -->
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <!-- .modal-content -->
+                      <div class="modal-content">
+                                    <!-- .modal-header -->
+                                    <div class="modal-header">
+                                      <h5 class="modal-title"> Do you really want to finish this test ? </h5>
+                                    </div>
+                                    <!-- /.modal-header -->
+                                    <!-- .modal-body -->
+                                  <div class="modal-body">  
+                                    Note: once finished your result will be delared                          
+                                </div>
+                              <!-- /.modal-body -->
+                              <!-- .modal-footer -->
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-primary" (click)="togglemodalfinish=!togglemodalfinish">Close</button>                  
+                                  <button type="submit" class="btn btn-light" (click)="submit()" >Save</button>
+                              </div>
+                              <!-- /.modal-footer -->
+                      </div>
+                  </div><!-- /.modal-dialog -->
+              </div>
+                <div *ngIf="togglemodalfinish" class="aside-backdrop show"></div>
+         </main>

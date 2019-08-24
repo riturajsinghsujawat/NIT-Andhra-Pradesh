@@ -1,0 +1,264 @@
+<div class="page margin-sm" [ngClass]="{'margin-sm-scroll': commonService.direction=='down' && !mine ,'margin-sm-scroll-mine': commonService.direction=='down' && mine , 'margin-sm': commonService.direction!='down'}" >
+
+    <nav aria-label="breadcrumb"   *ngIf="!mine"  >
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/home/resumes" class="ml-3" > <i class="breadcrumb-icon fas fa-arrow-circle-left mt-2" > </i> Back </a>
+          </li>                    
+        </ol>                   
+      </nav>
+
+    <header style="min-height:6rem!important" class="page-cover">
+        <img class="cover-img" src="assets/images/dummy/cover3.jpeg" alt="">
+    </header>
+
+  <div class="sidebar-backdrop"></div>
+            <!-- .page-inner -->
+    <div class="page-inner  pt-2">
+              <!-- .page-title-bar -->
+              <header class="page-title-bar">
+                  <!-- grid row -->
+                  <div class="row align-items-center">
+                    <!-- .col-auto -->
+                    <div class="col-auto">
+                      <!-- .user-avatar -->
+                      <a class="user-avatar user-avatar-floated user-avatar-xxl"><img src="{{resume.imageLogo|async}}" onError="this.src='assets/images/avatars/profile.jpg'" alt=""></a> <!-- /.user-avatar -->
+                    </div><!-- /.col-auto -->
+                    <!-- .col -->
+                    <div class="col">
+                      <h3 class="page-title">  {{resume.about.name}}</h3>
+                      <p class="text-muted">
+                        <i class="fas fa-user mr-1"></i> <span> {{resume.about.title}} </span>
+                        <br><a><i class="fas fa-envelope mr-1"></i> {{resume.about.email}}<span style="opacity:0;">lllllllllllllllll</span> </a>
+                      </p>  
+                      <span class="text-muted"> {{resume.about.shortDescription}} </span>                   
+                    </div><!-- /.col -->
+                    <!-- .col-auto -->
+                    <div   *ngIf="!mine" class="col-auto mt-1">
+                      <!-- <button (click)="openAskToWork()" class="btn btn-secondary"><i class="fas fa-user-plus mr-1"></i> Invite </button> --> 
+                      <button (click)="togglesendMessage()" class="btn btn-secondary ml-1"><i class="fas fa-envelope mr-1"></i> Message </button> 
+                    </div><!-- /.col-auto -->
+                  </div><!-- /grid row -->
+                </header><!-- /.page-title-bar -->                                                      
+                <nav class="page-navs">
+                  <!-- .nav-scroller -->
+                  <div class="nav-scroller">
+                    <!-- .nav -->
+                    <div class="nav nav-center nav-tabs">
+                      <a class="nav-link" (click)="mode='resume'" [ngClass]="{'active': mode=='resume'}" >Resume</a> <a (click)="togglemodefeeds()" [ngClass]="{'active':mode=='feeds'}"  class="nav-link" >Feeds </a> <!-- <a (click)="togglemodeprojects()" [ngClass]="{'active':mode=='projects'}"  class="nav-link" >Projects</a> --> 
+                    </div><!-- /.nav -->
+                  </div><!-- /.nav-scroller -->
+                </nav>
+                <div class="page-inner">
+                  <div class="page-section" *ngIf="mode=='resume'">
+                    <div class="row">
+                    
+                          <div class="col-xl-4 col-lg-4 col-sm-6">                                             
+    
+                            
+                                <section class="card card-fluid">
+                                    <header class="card-header"> Education </header>
+                                     <!-- <h6 class="pl-1 pr-1">{{resume.education.shortDescription}}</h6>   -->
+    
+                                      <div class="lits-group list-group-flush">
+                                          <div class="list-group-item" *ngFor="let item of resume.education.items">                    
+                                            <div class="list-group-item-figure">
+                                              <div class="has-badge">
+                                                <a  class="fa fa-university"></a>            
+                                              </div>
+                                            </div>                     
+                                            <div class="list-group-item-body">
+                                              <h5 class="card-title mb-2">
+                                                <p> {{item.organisation}}  </p>
+                                              </h5>
+                                              <p class="card-subtitle text-muted"> 
+                                                  {{item.degree}} : From {{item.start}} to {{item.end}} 
+                                              </p>                       
+                                          </div>        
+                                        </div>
+                                      </div>                 
+                                  </section>
+    
+                          </div>
+                          
+                          <div class="col-xl-8 col-lg-8 col-sm-8">                       
+                                <!-- <button class="btn btn-primary" (click)="openAskToWork()">Request {{resume.about.name}}</button> -->
+                                <section class="card card-fluid">
+                                    <header class="card-header"> Skills</header>
+                                    <!-- <h6 class="pl-1 pr-1">{{resume.skills.shortDescription}}</h6>   -->
+                                    <div class="lits-group list-group-flush">                            
+                                        <div class="list-group-item" *ngFor="let item of resume.skills.skills.items"> 
+                      
+                                            <div class="list-group-item-figure">
+                                              <div class="has-badge">
+                                                <a  class="fas fa-cogs"></a>                                      
+                                              </div>
+                                            </div>                      
+                                          <div class="list-group-item-body">
+                                              <h5 class="card-title mb-1">
+                                                <p>{{item.skillName}}</p><p>
+                                              </p></h5>
+                                              <p class="card-subtitle text-muted"> Level : {{item.level}} </p>
+                                              
+                                          </div>
+                              <!-- .lits-group-item-body -->
+                                      </div>
+                                    </div>  
+                                </section> 
+
+                           <!--      <section class="card card-fluid">
+                                    <header class="card-header"> Languages </header>                                  
+                                    <div class="lits-group list-group-flush">                            
+                                        <div class="list-group-item" *ngFor="let item of resume.skills.language.items"> 
+                      
+                                            <div class="list-group-item-figure">
+                                              <div class="has-badge">
+                                                <b  class="fas fa-language"></b>                                      
+                                              </div>
+                                            </div>                      
+                                          <div class="list-group-item-body">
+                                              <h5 class="card-title mb-1">
+                                                <p>{{item.name}}</p><p>
+                                              </p></h5>
+                                              <p class="card-subtitle text-muted"> Level : {{item.level}} </p>
+                                              
+                                          </div>                              
+                                      </div>
+                                    </div>  
+                                </section>  -->
+                                
+                               <section class="card card-fluid">
+                                  <header class="card-header"> Work Experience </header>
+                                   <!--  <h6 class="pl-1 pr-1"> {{resume.experience.shortDescription}} </h6>   -->
+                                      <div class="lits-group list-group-flush">                             
+                                          <div class="list-group-item" *ngFor="let item of resume.experience.items"> 
+                        
+                                              <div class="list-group-item-figure">
+                                                <div class="has-badge">
+                                                  <i class="fas fa-briefcase"></i>                                      
+                                                </div>
+                                              </div>                      
+                                                <div class="list-group-item-body">
+                                                  <h5 class="card-title mb-1">
+                                                   <p>{{item.organisation}}</p>
+                                                  </h5>       
+                                                  <p class="card-subtitle text-muted"> 
+                                                      {{item.position}} From  {{item.start}} to {{item.end}} 
+                                                     <br> <span>{{item.description}}</span>
+                                                  </p>                                 
+                                                </div>
+                                          </div>
+                                      </div>  
+                              </section>  
+                              
+                              
+                        </div>
+                 
+                 
+                        <div class="modal fade has-shown show" *ngIf="toggleApplyProject"  style="display:block;padding:15px;" >
+                            <!-- .modal-dialog -->
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <!-- .modal-content -->
+                              <div class="modal-content">
+                                            <!-- .modal-header -->
+                                            <div class="modal-header">
+                                              <h5 class="modal-title"> Invite to Project </h5>
+                                            </div>
+                                            <!-- /.modal-header -->
+                                            <!-- .modal-body -->
+                                           <div class="modal-body">                                                   
+                                                       <fieldset>      
+                                                            <!-- .form-group -->
+                                                            <div class="form-group">
+                                                              <label for="lbl1"> What will be the Position and Type of Work ? 
+                                                                <abbr title="Required">*</abbr>
+                                                              </label>
+                                                              <textarea  name="message"  class="form-control" required [(ngModel)]="appliance.message" id="lbl3" rows="3" placeholder="Your Answer"></textarea>
+                                                            </div>
+                                                            <!-- /.form-group -->
+                                                            <div class="form-group">
+                                                              <label for="lbl1"> In which Project ?
+                                                                <abbr title="Required">*</abbr>
+                                                              </label>
+                                                            
+    
+                                                              <select [(ngModel)]="project" required label="select Project"  class="custom-select" id="fls1" required>
+                                                               
+                                                                <ng-container *ngFor="let project of userProjects">   <option [ngValue]=project>   {{project.title}} </option></ng-container>
+                                                                
+                                                              </select>
+                                                           </div>             
+                                                        </fieldset>                       
+                                                  
+                                                    <!-- .modal-footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" (click)="toggleApplyProject = false" >Close</button>
+                                                       
+                                                        <button type="submit" class="btn btn-light" (click)="apply()" >Save</button>
+                                                    </div>
+                                                    <!-- /.modal-footer -->
+                                              
+                                          </div>
+                               </div>
+                           </div><!-- /.modal-dialog -->
+                          </div>
+                          
+    
+                          <div *ngIf="showChat" class="modal fade has-shown show" tabindex="-1" role="dialog" aria-labelledby="exampleModalDockedLabel" style="display: block;" aria-modal="true">
+                            <!-- .modal-dialog -->
+                            <div class="modal-dialog modal-sm modal-dialog-scrollable" role="document">
+                              <!-- .modal-content -->
+                              <div class="modal-content">
+                                <!-- .modal-header -->
+                                <div class="modal-header bg-primary text-white modal-body-scrolled">
+                                  <div class="d-block">
+                                    <p id="exampleModalDockedLabel"> Hi 👋! Send a Message to {{resume.about.name}} </p>
+                                    
+                                  </div>
+                                </div><!-- /.modal-header -->
+                                <form (ngSubmit)="sendMessage(messageForm)" #messageForm="ngForm">
+                                 <!-- .modal-body -->
+                                <div class="modal-body py-3">
+                                  <!-- .form-group -->
+                                  <div class="form-group">
+                                    <div class="form-label-group">
+                                      <input name="message" ngModel type="text" id="cname" class="form-control placeholder-shown" placeholder="Name" required> <label for="cname">Message</label>
+                                    </div>
+                                  </div><!-- /.form-group -->
+                                  <button type="submit" class="btn btn-lg btn-block btn-primary" [disabled]=!messageForm.valid > Send </button> <button type="button" class="btn btn-lg btn-block btn-link" (click)="togglesendMessage()" data-dismiss="modal" aria-label="Close">Close</button>
+                                </div><!-- /.modal-body -->
+                                </form>
+                              </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                          </div>
+                    </div> 
+                  </div> 
+                   <!-- .page-section -->
+                    <div class="page-section"  *ngIf="mode=='feeds'">                     
+                      <h5 class="ml-2" *ngIf="feeds.length==0" > No Feeds to Show </h5>
+                        <!-- .section-block -->
+                <div class="row">
+                  <div  class="col-lg-12 col-xl-12" >              
+                    <app-singlefeed [feed]="feed" *ngFor="let feed of feeds"></app-singlefeed>
+                  </div>
+               </div><!-- /.section-block -->
+                    </div><!-- /.page-section -->
+                       <!-- .page-section -->
+                       <div class="page-section"  *ngIf="mode=='projects'">                     
+                        <h5 class="ml-2" *ngIf="userProjects.length==0" > No Projects to Show </h5>
+                        <!-- .section-block -->
+                        <div class="row">
+                          <!-- grid column -->
+                          <div  class="col-lg-6 col-xl-6" >
+                            <app-project-card  *ngFor="let project of userProjects" [routerLink]="['/home/projects',project.docId]" [project]="project"></app-project-card>
+                          </div><!-- /grid column -->
+                         </div>
+                                                 
+                        </div><!-- /.section-block -->
+                      <!-- /.page-section -->
+                 </div>
+       
+      </div> 
+</div>   
+
+<div *ngIf="toggleApplyProject || showChat" class="aside-backdrop show"></div>

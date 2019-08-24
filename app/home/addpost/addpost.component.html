@@ -1,0 +1,87 @@
+<div class="page">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <div class="row">
+      <div  class="col-lg-12 col-xl-12" >
+          <!-- .page-section -->
+          <div class="page-section" [ngClass]="{'margin-sm-scroll': commonService.direction=='down', 'margin-sm': commonService.direction!='down'}"  >
+            <div class="" >
+             
+                <!-- .section-block -->
+                <div class="" *ngIf="mode=='first'">
+                    <div  class="list-group list-group-bordered mb-3" >
+                        <a class="list-group-item list-group-item-action">
+                            <h5 class="mt-2">  <i class="fas fa-arrow-circle-left mr-2" routerLink="/home" ></i> Select Type </h5>     
+                          </a> 
+                      
+                        <a (click)="onSelectposttype('Discussion')" class="list-group-item list-group-item-action">
+                          <div class="list-group-item-figure" (click)="onSelectposttype('Discussion')" >
+                            <div class="tile bg-success">
+                              <span class="oi oi-chat"></span>
+                            </div>
+                          </div>
+                          <div class="list-group-item-body" (click)="onSelectposttype('Discussion')" > Discussion </div>
+                        </a> 
+                        <a (click)="onSelectposttype('Event')" class="list-group-item list-group-item-action">
+                          <div class="list-group-item-figure">
+                            <div class="tile bg-danger" (click)="onSelectposttype('Event')">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                          </div>
+                          <div class="list-group-item-body" (click)="onSelectposttype('Event')"> Add Event </div>
+                        </a>
+                        <a (click)="onSelectposttype('News')"  class="list-group-item list-group-item-action">
+                          <div class="list-group-item-figure">
+                            <div class="tile bg-warning" (click)="onSelectposttype('News')"  >
+                                <i class="fas fa-newspaper"></i>
+                            </div>
+                          </div>
+                          <div class="list-group-item-body" (click)="onSelectposttype('News')"  > Add News </div>
+                        </a>                       
+                    </div>                                               
+                </div><!-- /.section-block -->
+  
+                <!-- .section-block -->
+                <div class="section-block" *ngIf="mode=='second'">
+                    <h5 class="mt-2">  <i class="fas fa-arrow-circle-left mr-2" routerLink="/home"  ></i> Submit Details </h5>     
+                    <form (ngSubmit)="publish(feed)" #feed="ngForm" >                                                  
+                        <fieldset>               
+                            <div class="form-group">
+                              <label for="lbl1"> Title </label> <input type="text" ngModel name="title" class="form-control" id="lbl1" placeholder="" required="">
+                            </div><!-- /.form-group -->                               
+                            <!-- .form-group -->
+                            <div class="form-group">
+                              <label for="lbl3"> Description </label>
+                              <textarea class="form-control" id="lbl3" ngModel name="content" rows="3" placeholder="" required=""></textarea>
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="tf3">Upload Image</label>
+                                <div class="custom-file">
+                                    <input (change)="choosefiles($event)" type="file" id="tf3"> <label class="custom-file-label" for="tf3">Choose file</label>
+                                </div>
+                                <small id="tf3" class="form-text text-muted">{{imagestatus}}</small>
+                              </div>                             
+                               <div  *ngIf="imagestatus=='Uploaded successfully'" >
+                                  <li class="list-group-item align-items-center drag-handle">
+                                      <img style="width:70px;height:70px;" src="{{imgsrc | async}}" onError="this.src='assets/images/loadmage.gif'" alt="">                                     
+                                      <div class="btn-group ml-auto">
+                                         <button (click)="delImage()" class="btn btn-sm btn-secondary"><i class="far fa-trash-alt"></i></button>
+                                      </div>
+                                    </li>                                                                                                       
+                                 </div>                                                        
+                          </fieldset>                                  
+                      <!-- .modal-footer -->
+                      <div class="form-actions ml-auto">
+                              <button type="submit" class="btn btn-primary btn-block" [disabled]="!feed.valid && imagestatus!='Uploaded successfully'" > Submit </button>
+                        </div>
+                      <!-- /.modal-footer --> 
+                    </form>  
+                </div><!-- /.section-block -->
+            </div>
+          
+          </div>
+          <!-- /.page-section -->
+      </div>
+    </div>
+  </div><!-- /.page-inner -->
+</div>

@@ -1,0 +1,119 @@
+        <!-- .feed -->
+        <div *ngIf="mode=='feed'" class="feed">
+            <!-- .feed-post -->
+            <div class="feed-post card">
+              <!-- .card-header -->
+              <div class="card-header card-header-fluid">
+                <a class="btn-account" role="button">                              
+                  <div class="user-avatar user-avatar-lg">
+                    <img src="assets/images/avatars/avatar.png" alt="">
+                  </div>                           
+                  <div  [routerLink]="[ '/home/resumes', feed.uid]" class="account-summary">
+                    <p class="account-name"> {{feed.uname}} </p>
+                    <p class="account-description"> {{feed.createdOn.toDate() | date :'LLL dd y on hh:mm aa ' }} </p>
+                  </div>
+                </a> 
+                <span class="badge badge-primary badge-sm badge-info ml-auto" style="width:auto;max-height:20px;" >{{feed.cate}}</span>   
+                <!-- .dropdown -->
+                  <div class="dropdown align-self-start ml-auto" *ngIf="admin"  >
+                  <button class="btn btn-icon btn-light text-muted" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-v"></i></button>
+                  <div class="dropdown-arrow"></div>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" (click)="delete(feed.docId)" > Delete </a>
+                  </div>
+                </div>
+    
+                  <!-- /.dropdown -->
+              </div><!-- /.card-header -->
+          
+              <!-- .card-body -->
+              <div class="card-body">
+                    <h6>{{feed.title}}</h6>
+                    <p class="mb-2"  *ngIf="viewmore==false" [innerHtml]="feed.content.substring(0,300) | linky"></p> <span *ngIf="hideviewmore==false && viewmore==false" (click)="viewMore()" style="color:rgb(0, 0, 141)">..Continue reading</span>
+                    <p class="mb-2" *ngIf="viewmore==true" [innerHtml]="feed.content | linky"> </p>
+               
+               <!-- .outbound-link -->
+                <!-- .feed-summary -->
+                <!-- <div class="feed-summary">
+                  <a class="feed-summary-item mr-auto">6.3K likes</a> <a class="feed-summary-item">826 comments</a> <a class="feed-summary-item">·</a> <a class="feed-summary-item">2.9K shares</a>
+                </div> --><!-- .feed-summary -->
+
+                <div *ngIf="feed.image">                        
+                            <ngx-gallery (click)="openPreview(1)" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>                       
+                </div>
+              </div><!-- /.card-body -->
+              <!-- .card-footer -->
+
+          
+              <div class="card-footer">
+                <!--  <div class="card-footer-item">
+                  <button type="button" class="btn btn-reset text-nowrap text-muted"><i class="fa fa-fw fa-heart"></i> Like</button>
+                </div> -->
+                <div class="card-footer-item">
+                  <button (click)="showcomments=!showcomments"  type="button" class="btn btn-reset text-nowrap text-muted"><i class="fa fa-fw fa-comment"></i> {{feed.comments.length}} Comments</button>
+                </div>
+              <!--   <div class="card-footer-item">
+                  <button type="button" class="btn btn-reset text-nowrap text-muted"><i class="fa fa-fw fa-share"></i> Share</button>
+                </div> -->
+              </div><!-- /.card-footer -->
+            </div><!-- /.feed-post -->
+            <div *ngIf="showcomments" class="feed-comments card">
+              <!-- .card-header -->
+              <!--  <div class="card-header d-flex justify-content-between">
+                <a>View more comments</a> <span class="text-muted">72 of 826</span>
+              </div> --><!-- /.card-header -->
+              <!-- .conversations -->
+              <div role="log" class="conversations">
+                <!-- .conversation-list -->
+                <ul class="conversation-list">
+                  <!-- .conversation-inbound -->
+                  <li *ngFor="let comment of feed.comments" class="conversation-inbound">
+                    <!-- .conversation-avatar -->
+                    <div class="conversation-avatar">
+                      <a  class="user-avatar"  [routerLink]="[ '/home/resumes', comment.uid ]" ><img src="assets/images/avatars/profile.jpg" alt=""></a>
+                    </div><!-- /.conversation-avatar -->
+                    <!-- .conversation-message -->
+                    <div class="conversation-message">
+                      <div class="conversation-meta">
+                        <a><strong>{{comment.uname}}</strong></a> 
+                      </div>
+                      <div class="conversation-message"> {{comment.content}} </div>
+                      <!--  <div class="conversation-meta">
+                        <a>Like</a> · <a>Reply</a> · <a>Edit</a> · <a>Delete</a>
+                      </div> -->
+                    </div><!-- /.conversation-message -->
+                  </li><!-- /.conversation-inbound -->
+                  <li class="conversation-action mt-3">
+                    <form (ngSubmit)="addComment(commentForm,feed)" #commentForm="ngForm">  
+                      <!-- .media -->
+                        <div class="media">
+                          <figure class="user-avatar mr-2">
+                            <img src="assets/images/avatars/profile.jpg" alt="">
+                          </figure><!-- .media-body -->
+                          <div class="media-body">
+                            <!-- .composer -->
+                            <div class="publisher publisher-alt focus active">
+                              <!-- .publisher-input -->
+                              <div class="publisher-input">
+                                <textarea ngModel name="content" class="form-control" placeholder="Write a comment"></textarea>
+                              </div><!-- /.publisher-input -->
+                              <!-- .publisher-actions -->
+                              <div class="publisher-actions">
+                                <!-- .publisher-tools -->
+                                <div class="publisher-tools mr-auto">
+                                  <div class="btn btn-light btn-icon fileinput-button">                                               
+                                    </div>                                             
+                                </div><!-- /.publisher-tools -->
+                                <button type="submit" class="btn btn-primary">Publish</button>
+                              </div><!-- /.publisher-actions -->
+                            </div><!-- /.publisher -->
+                          </div><!-- /.media-body -->
+                        </div>
+                      <!-- /.media -->
+                    </form>
+                  </li>
+                </ul><!-- /.conversation-list -->
+              </div><!-- /.conversations -->
+            </div>
+          </div><!-- /.feed -->
+          

@@ -1,0 +1,530 @@
+<div class="page">
+    <!-- .page-inner -->
+  <div class="page-inner">   
+      <!-- .page-section -->
+      <div class="page-section margin-sm">
+            <!-- grid row -->
+            <div class="row">
+                  <!-- grid column -->
+                        <div class="col-lg-4 ">
+                                <!-- .card -->
+                                  <div class="card card-fluid">
+                                    <h6 class="card-header"> Your Details </h6><!-- .nav -->
+                                    <nav class="nav nav-tabs flex-column border-0">
+                                      <a (click)="togglemodeone()" class="nav-link" [ngClass]="{'active': mode=='one','active-colour': mode=='one'}"> About </a>
+                                       <a [ngClass]="{'active': mode=='two','active-colour': mode=='two'}" (click)="togglemodetwo()" class="nav-link" > Education & Skill </a> 
+                                       <a (click)="togglemodethree()" [ngClass]="{'active': mode=='three','active-colour': mode=='three'}" class="nav-link"> Experience </a>
+                                        <a (click)="togglemodefour()" [ngClass]="{'active': mode=='four','active-colour': mode=='four'}" class="nav-link"> Social Link </a>                                   
+                                    </nav><!-- /.nav -->
+                                  </div><!-- /.card -->
+                        </div><!-- /grid column -->
+                      <!-- grid column -->
+                      <div class="col-lg-8">
+                        <!-- .card -->
+                            <form name="skillForm">          
+                                                 
+                                    <div class="card card-fluid" *ngIf="mode=='one'">
+                                            <h6 class="card-header"> Personal Details </h6><!-- .card-body -->
+                                            <div class="card-body">
+                                                <div class="media mb-3">
+                                                    <!-- avatar -->
+                                                    <div class="user-avatar user-avatar-xl fileinput-button">
+                                                      <div class="fileinput-button-label"> Change photo </div><img  src="{{imgsrclogo|async}}" onError="this.src='assets/images/avatars/profile.jpg'" alt=""> <input  (change)="choosefiles($event,'logo')" id="fileupload-avatar" type="file" name="avatar">
+                                                    </div><!-- /avatar -->
+                                                    <!-- .media-body -->
+                                                    <div class="media-body pl-3">
+                                                      <h3 class="card-title"> Public avatar </h3>
+                                                      <h6 class="card-subtitle text-muted"> Click the current avatar to change your photo. </h6>
+                                                      <p class="card-text">
+                                                        <small>JPG, GIF or PNG 140*140, &lt; 2 MB.</small>
+                                                      </p><!-- The avatar upload progress bar -->
+                                                      <div class="progress mb-4">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width':percentage1+'%'}"></div>
+                                                      </div>
+                                                      <div id="progress-avatar" class="progress progress-xs fade">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                                                      </div><!-- /avatar upload progress bar -->
+                                                    </div><!-- /.media-body -->
+                                                  </div>
+                                                      <fieldset >
+                                                              <div class="row" >
+                                                                          <div class="col-12">
+                                                                                  <!-- .form-group -->
+                                                                              <!--   <div class="form-group">
+                                                                                  <label for="tf3">Cover Image</label>
+                                                                                  <div class="custom-file">
+                                                                                      <input (change)="choosefiles($event,'cover')" type="file" class="custom-file-input" id="tf3"> <label class="custom-file-label" for="tf3">Choose file</label>
+                                                                                      <small class="text-muted">Upload a new cover image, JPG 804*990 </small>
+                                                                                      <div *ngIf="percentage2 && percentage2!=100" class="progress mb-4">
+                                                                                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width':percentage2+'%'}"></div>
+                                                                                      </div>
+                                                                                      <div *ngIf="imgsrccover" class="list-group-item list-group-item-action">
+                                                                                          <div class="list-group-item-figure">
+                                                                                              <img height="50px;" src="{{imgsrccover|async}}">
+                                                                                          </div>
+                                                                                          <div class="list-group-item-body">
+                                                                                          <span class="list-group-item-text">{{resume.imageCover}}</span>
+                                                                                          </div>
+                                                                                          <div (click)="delCover('cover')" class="list-group-item-figure">
+                                                                                              <span class="fa fa-lg fa-fw fa-times"></span>
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  </div>
+                                                                                  </div> --><!-- /.form-group -->  
+
+                                                                                  <div class="form-group">
+                                                                                    <label >Name</label> <input type="string" class="form-control" name="name"  placeholder="Your Name Here" [(ngModel)]="resume.about.name" disabled="true"> 
+                                                                                  </div>
+                                                                                <div class="form-group">
+                                                                                  <label>Email</label> <input type="email" class="form-control" name="email"  placeholder="e.g. abc@iswadhyay.com" [(ngModel)]="resume.about.email" [disabled]="true"> 
+                                                                                </div><!-- /.form-group -->
+                                                                                  <!-- .form-group -->
+                                                                                  <div class="form-group">
+                                                                                    <label>Phone</label> <input type="string" class="form-control" name="phone" placeholder="Your Contact no." [(ngModel)]="resume.about.phone" [disabled]="true"> 
+                                                                                  </div>
+                                                                                  <!-- /.form-group -->
+                                                                                  <!-- /.form-group -->
+                                                                                  <div class="form-group">
+                                                                                    <label >Title</label> <input type="string" class="form-control" name="title"  placeholder="e.g. UX/UI Designer" [(ngModel)]="resume.about.title"> 
+                                                                                  </div>
+                                                                                  <!-- .form-group -->
+                                                                                  <!-- .form-group -->
+                                                                                  <div class="form-group">
+                                                                                    <label>Date of Birth</label> <input type="date" name="dob" [(ngModel)]="resume.about.dob" class="form-control"  placeholder="Date of Birth"> 
+                                                                                  </div><!-- /.form-group -->
+                                                                                  <!-- .form-group -->
+                                                                                  <div class="form-group">
+                                                                                    <label > Current City</label> <input type="text" name="address" [(ngModel)]="resume.about.address" class="form-control" placeholder="Current City"> 
+                                                                                  </div><!-- /.form-group -->                                                                                 
+                                                                                    <div class="form-group">
+                                                                                        <label> About you </label> <input type="text"  class="form-control" name="shortDescription" [(ngModel)]="resume.about.shortDescription" placeholder="20-30 words Summary"> 
+                                                                                      </div><!-- /.form-group -->                                                                                                                     
+                                                                          </div>                                    
+                                                              </div>
+                                                              <hr class="mt-2">
+                                                              <!-- .d-flex -->
+                                                              
+                                                      </fieldset>
+                                                      <!-- .form-actions -->
+                                                <div class="form-actions">
+                                                    <div class="d-flex ml-auto">                                               
+                                                      <button type="button" (click)="next()" class="btn btn-primary ml-auto mr-1"> Next </button>
+                                                    </div>
+                                                </div><!-- /.form-actions -->
+                                            </div><!-- /.card-body -->
+                                    </div><!-- /.card -->                                                                          
+                                  
+
+                                        <div class="card card-fluid" *ngIf="mode=='two'">
+                                                <h6 class="card-header"> Education Details</h6><!-- .card-body -->   
+                                             
+
+                                                <ul class=" list-group list-group-flush  list-group-bordered" >
+                                                    <li class="list-group-item align-items-center " *ngFor="let item of resume.education.items ; let i = index">  
+                                                        <div class="list-group-item-figure">
+                                                            <div class="has-badge">
+                                                              <a  class="fas fa-university"></a>                                                  
+                                                            </div>
+                                                          </div>                                                  
+                                                          <div class="list-group-item-body">                                                     
+                                                          <h5 class="card-title mb-2">
+                                                              <p> {{item.organisation}} </p>
+                                                          </h5>
+                                                            <p class="card-subtitle text-muted">  {{item.degree}} : {{item.start}} : {{item.end}} 
+                                                             </p>   
+                                                          </div>
+                                                          <div class="btn-group ml-auto">
+                                                            <button class="btn btn-sm btn-secondary" (click)="editEducation(item,i)"  > Edit </button> <button  class="btn btn-sm btn-secondary" (click)="deleteEducation(i)" ><i class="far fa-trash-alt"></i></button>
+                                                          </div>
+                                                    </li>                                                 
+                                                </ul>                                                                                                             
+                                                                                                                                                                                                          
+                                                    <!-- .card-footer -->
+                                                    <div class="card-footer bg-light">
+                                                      <a class="card-footer-item justify-content-start" (click)="addEducation()"><span><i class="fa fa-plus-circle mr-1"></i> Add Education</span></a>
+                                                    </div><!-- /.card-footer -->
+                                        </div><!-- /.card -->  
+                                        <div class="card card-fluid" *ngIf="mode=='two'">
+                                            <h6 class="card-header"> Skill Details</h6><!-- .card-body -->   
+                                          
+                                              <ul class=" list-group list-group-flush  list-group-bordered" >
+                                                <li class="list-group-item align-items-center " *ngFor="let item of resume.skills.skills.items ; let i = index">  
+                                                    <div class="list-group-item-figure">
+                                                        <div class="has-badge">
+                                                          <a  class="fas fa-cogs"></a>                                                  
+                                                        </div>
+                                                      </div>                                                  
+                                                      <div class="list-group-item-body">                                                     
+                                                      <h5 class="card-title mb-2">
+                                                          <p> {{item.skillName}} </p>
+                                                      </h5>
+                                                        <p class="card-subtitle text-muted">  {{item.level}} 
+                                                         </p>   
+                                                      </div>
+                                                      <div class="btn-group ml-auto">
+                                                        <button class="btn btn-sm btn-secondary" (click)="editSkill(item,i)"> Edit </button> <button  class="btn btn-sm btn-secondary" (click)="deleteSkill(i)" ><i class="far fa-trash-alt"></i></button>
+                                                      </div>
+                                                </li>                                                 
+                                            </ul>                                          
+                                            
+                                            <!-- .card-footer -->
+                                                <div class="card-footer bg-light">
+                                                  <a class="card-footer-item justify-content-start" (click)="addSkill()"><span><i class="fa fa-plus-circle mr-1"></i> Add Skill </span></a>
+                                                </div><!-- /.card-footer -->    
+                                                <div class="d-flex ml-auto mb-1 mt-1 ">                                                                                           
+                                                  <button type="button" (click)="next()" class="btn btn-primary ml-auto mr-1">Next </button>
+                                                </div>                                            
+                                       </div><!-- /.card -->                                 
+                                   
+                                      
+                                    
+                                            <div class="card card-fluid" *ngIf="mode=='three'">
+                                                <h6 class="card-header"> Experience Details</h6><!-- .card-body -->   
+                                                  <!-- .form-group -->                                                                                                        
+                                                    <ul class=" list-group list-group-flush  list-group-bordered" >
+                                                      <li class="list-group-item align-items-center "  *ngFor="let item of resume.experience.items;let i= index">  
+                                                          <div class="list-group-item-figure">
+                                                              <div class="has-badge">
+                                                                <a  class="fas fa-briefcase"></a>                                                  
+                                                              </div>
+                                                            </div>                                                  
+                                                            <div class="list-group-item-body">                                                     
+                                                            <h5 class="card-title mb-2">
+                                                              <p> {{item.organisation}} </p>
+                                                            </h5>
+                                                              <p class="card-subtitle text-muted"> 
+                                                                  {{item.position}} From  {{item.start}} to {{item.end}} 
+                                                                <br> <span>{{item.description}}</span>
+                                                             </p>
+                                                            </div>
+                                                            <div class="btn-group ml-auto">
+                                                              <button class="btn btn-sm btn-secondary" (click)="editExperience(item,i)"> Edit</button> <button  class="btn btn-sm btn-secondary"(click)="deleteExperience(i)" ><i class="far fa-trash-alt"></i></button>
+                                                            </div>
+                                                      </li>                                                 
+                                                  </ul>                                                                                                                                                                                                                                                                                                        
+                                                  <!-- .card-footer -->
+                                                    <div class="card-footer bg-light">                                              
+                                                    <a class="card-footer-item justify-content-start" (click)="addExperience()"><span><i class="fa fa-plus-circle mr-1"></i> Add Experience</span></a>
+                                                    
+                                                    </div><!-- /.card-footer -->
+                                                    <div class="d-flex ml-auto mt-1 mb-1">                                                                                               
+                                                      
+                                                        <button type="submit" (click)="togglemodefour()" class="btn btn-primary ml-auto mr-2"> Next </button>
+                                                      </div>
+                                            </div><!-- /.card -->  
+        
+                                      <div class="card card-fluid" *ngIf="mode=='four'">
+                                        <h6 class="card-header"> Social Networks </h6><!-- form -->
+                                                  <!-- .list-group -->
+                                          <div class="list-group list-group-flush mt-3 mb-0">
+                                            <!-- .list-group-item -->
+                                            <div class="list-group-item">
+                                              <!-- .list-group-item-figure -->
+                                              <div class="list-group-item-figure">
+                                                <div class="tile tile-md bg-twitter">
+                                                  <i class="fab fa-twitter"></i>
+                                                </div>
+                                              </div><!-- /.list-group-item-figure -->
+                                              <!-- .list-group-item-body -->
+                                              <div class="list-group-item-body">
+                                                <input type="text" class="form-control"  placeholder="Twitter Url" name="twitterUrl" [(ngModel)]="resume.contact.twitterUrL">
+                                              </div><!-- /.list-group-item-body -->
+                                            </div><!-- /.list-group-item -->
+                                            <!-- .list-group-item -->
+                                            <div class="list-group-item">
+                                              <!-- .list-group-item-figure -->
+                                              <div class="list-group-item-figure">
+                                                <div class="tile tile-md bg-facebook">
+                                                  <i class="fab fa-facebook-f"></i>
+                                                </div>
+                                              </div><!-- /.list-group-item-figure -->
+                                              <!-- .list-group-item-body -->
+                                              <div class="list-group-item-body">
+                                                <input type="text" class="form-control" placeholder="Facebook Profile Link" name="facebookUrl" [(ngModel)]="resume.contact.facebookUrL">
+                                              </div><!-- /.list-group-item-body -->
+                                            </div><!-- /.list-group-item -->
+                                            <!-- .list-group-item -->
+                                            <div class="list-group-item">
+                                              <!-- .list-group-item-figure -->
+                                              <div class="list-group-item-figure">
+                                                <div class="tile tile-md bg-linkedin">
+                                                  <i class="fab fa-linkedin"></i>
+                                                </div>
+                                              </div><!-- /.list-group-item-figure -->
+                                              <!-- .list-group-item-body -->
+                                              <div class="list-group-item-body">
+                                                <input type="text" class="form-control" placeholder="Linkedin Profile Link" name="linkedinUrl" [(ngModel)]="resume.contact.linkedinUrL">
+                                              </div><!-- /.list-group-item-body -->
+                                            </div><!-- /.list-group-item -->
+                                            <!-- .list-group-item -->
+                                            <div class="list-group-item">
+                                              <!-- .list-group-item-figure -->
+                                              <div class="list-group-item-figure">
+                                                <div class="tile tile-md bg-github">
+                                                  <i class="fab fa-github"></i>
+                                                </div>
+                                              </div><!-- /.list-group-item-figure -->
+                                              <!-- .list-group-item-body -->
+                                              <div class="list-group-item-body">
+                                                <input type="text" class="form-control" placeholder="Github Username" name="githubUrl" [(ngModel)]="resume.contact.githubUrL" >
+                                              </div><!-- /.list-group-item-body -->
+                                            </div><!-- /.list-group-item -->
+                                          </div><!-- /.list-group -->
+                                          <!-- .card-body -->
+                                          <div class="card-body">
+                                            <hr>
+                                            <!-- .form-actions -->
+                                            <div class="form-actions">
+                                                <div class="d-flex ml-auto">
+                                                  <button type="submit" (click)="saveDetails()" class="btn btn-primary ml-auto mr-2"> Save </button>                                                  
+                                                </div>
+                                            </div><!-- /.form-actions -->
+                                          </div><!-- /.card-body -->                                   
+                                     </div>                              
+                            </form>     
+                      </div><!-- /grid column -->
+            </div><!-- /grid row -->
+      </div><!-- /.page-section -->
+  </div><!-- /.page-inner -->
+</div>
+
+<div class="modal fade has-shown show" *ngIf="togglemodaleducation"  style="display:block;padding:15px;" >
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+                    <!-- .modal-header -->
+                    <div class="modal-header">
+                      <h5 class="modal-title"> Add Education </h5>
+                    </div>
+                    <!-- /.modal-header -->
+                    <!-- .modal-body -->
+                   <div class="modal-body">                                                   
+                               <fieldset>      
+                                    <!-- .form-group -->
+                                    <div class="form-group">
+                                      <label for="lbl1"> Organisation Name
+                                        <abbr title="Required"> * </abbr>
+                                      </label>
+                                      <input type="text"  class="form-control" name="organisation" [(ngModel)]="eduitem.organisation"> 
+                                    </div>
+                                    <!-- /.form-group -->
+                                      
+                                      <div class="form-row">
+                                            <!-- grid column -->
+                                            <div class="col-md-6 mb-3">
+                                                <label for="lastName"> Start Year </label>
+                                                <abbr title="Required"> * </abbr>
+                                                <input type="text" class="form-control"  [(ngModel)]="eduitem.start" name="start">                                                
+                                            </div>
+                                            <!-- /grid column -->
+                                            <!-- grid column -->
+                                            <div class="col-md-6 mb-3">
+                                              <label for="lastName">End Year  <abbr title="Required">*</abbr>
+                                              </label>
+                                             
+                                              <input type="number" class="form-control"  [(ngModel)]="eduitem.end" name="end">                                              
+                                            </div>
+                                            <!-- /grid column -->
+                                      </div>
+                                      <!-- /.form-group -->
+                                              <!-- .form-group -->
+                                        <div class="form-row">
+                                                    <!-- grid column -->
+                                                    <div class="col-6 mb-3">
+                                                      <label for="country"> Degree
+                                                          <abbr title="Required"> * </abbr>
+                                                      </label>
+                                                    
+                                                      <select class="custom-select d-block w-100"  [(ngModel)]="eduitem.degree" name="degree">
+                                                          <option value=""> Choose</option> 
+                                                        <option > X </option> 
+                                                        <option > XII </option>
+                                                        <option > Diploma </option>
+                                                        <option > Undergraduate </option>
+                                                        <option > Post Graduate </option>                                                                               
+                                                      </select>
+                                                    
+                                                    </div>                                   
+                                                    <!-- /grid column -->
+                                                    <!-- grid column -->
+                                                                                           
+                                            </div>                              
+                                </fieldset>                       
+                          
+                            <!-- .modal-footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" (click)="toggleModalEducationfalse()" >Close</button>
+                               
+                                <button type="submit"  class="btn btn-success" [disabled]="checkEmpty([eduitem.organisation,eduitem.start,eduitem.end,eduitem.degree])" (click)="saveEducation()" >Save</button>
+                            </div>
+                            <!-- /.modal-footer -->
+                      
+                  </div>
+       </div>
+   </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade has-shown show" *ngIf="togglemodalskill"  style="display:block;padding:15px;" >
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+                    <!-- .modal-header -->
+                    <div class="modal-header">
+                      <h5 class="modal-title"> Add Skill </h5>
+                    </div>
+                    <!-- /.modal-header -->
+                    <!-- .modal-body -->
+                   <div class="modal-body">        
+                      <fieldset>      
+                                <!-- .form-group -->
+                                <div class="form-group">
+                                      <label for="lbl1"> Skill Name
+                                        <abbr title="Required">*</abbr>
+                                      </label>
+                                      <input type="text" class="form-control"  placeholder="Skill Name" [(ngModel)]="skillitem.skillName" required name="skillName"> 
+                                </div>                             
+                                 <div class="form-group">
+                                         <label for="country">Level
+                                            <abbr title="Required">*</abbr>
+                                         </label>
+                                           <select class="custom-select d-block w-100"  name="level" [(ngModel)]="skillitem.level" required >
+                                              <option value=""> Choose</option> 
+                                              <option > Beginner</option> 
+                                              <option > Intermediate</option>
+                                              <option > Advance </option>                                                                                                                                  
+                                            </select>                                     
+                                 </div>                                                                                                                                  
+                    </fieldset>
+                </div>
+              <!-- /.modal-body -->
+              <!-- .modal-footer -->
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" (click)="toggleModalSkillfalse()"> Close</button>                  
+                  <button type="submit" class="btn btn-success" [disabled]="checkEmpty([skillitem.skillName,skillitem.level])" (click)="saveSkill()" >Save</button>
+              </div>
+              <!-- /.modal-footer -->
+       </div>
+   </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade has-shown show" *ngIf="togglemodalexperience"  style="display:block;padding:15px;" >
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <!-- .modal-content -->
+         <div class="modal-content">
+          <!-- .modal-header -->
+          <div class="modal-header">
+            <h5 class="modal-title"> Work Experience </h5>
+          </div>
+          <div class="modal-body">
+                  <fieldset>
+                          <div class="form-group">
+                            <label for="lbl1"> Position
+                              <abbr title="Required">*</abbr>
+                            </label>
+                            <input type="text" class="form-control" [(ngModel)]="experienceitem.position" placeholder="Position at Company" name="position" > </div>
+                        <div class="form-row">    
+                              <div class="col-6 mb-3">                               
+                                  <label for="lastName">Start Month & Year
+                                      <abbr title="Required">*</abbr>
+                                  </label>
+                                  
+                                  <input type="text" class="form-control" placeholder="E.g. May 2018" name="start" [(ngModel)]="experienceitem.start" >
+                                  <div class="invalid-feedback"> Valid Start Year is required. </div>
+                              </div>
+
+                              <div class="col-6 mb-3">
+                                <label for="lastName">End Month & Year
+                                    <abbr title="Required">*</abbr>
+                                </label>
+                                
+                                <input type="text" class="form-control"   placeholder="E.g. June 2018"  name="end" [(ngModel)]="experienceitem.end" >
+                                <div class="invalid-feedback"> Valid End Year is required. </div>
+                              </div>
+                        </div>
+
+                          <div class="form-group">
+                            <label for="lbl1"> Organisation
+                                <abbr title="Required">*</abbr>
+                            </label>
+                            
+                            <input type="text" class="form-control" placeholder="Organisation Name" name="organisation" [(ngModel)]="experienceitem.organisation" >
+                           </div>
+
+              
+                          <div class="form-group">
+                            <label for="lbl1">Description
+                              <abbr title="Required">*</abbr>
+                            </label>
+                            <input type="text" class="form-control" placeholder="Tell About Your Experience" name="description" [(ngModel)]="experienceitem.description" >
+                           </div>
+                
+                  </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="toggleModalExperiencefalse()">Close</button>
+              <button type="submit"  class="btn btn-success" [disabled]="checkEmpty([experienceitem.position,experienceitem.organisation,experienceitem.description,experienceitem.start,experienceitem.end])" (click)="saveExperience()" >Save</button>
+          </div>
+          <!-- /.modal-footer -->
+        </div>
+     </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade has-shown show" *ngIf="togglemodallanguage"  style="display:block;padding:15px;" >
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+                  <!-- .modal-header -->
+                  <div class="modal-header">
+                    <h5 class="modal-title"> Add Language </h5>
+                  </div>
+                  <!-- /.modal-header -->
+                  <!-- .modal-body -->
+                 <div class="modal-body">        
+                    <fieldset>   
+                         <div class="form-group">
+                                    <label > Language Name
+                                      <abbr title="Required">*</abbr>
+                                    </label>
+                                    <input type="text" class="form-control" [(ngModel)]="languageitem.name" placeholder="language name" name="name"> 
+                              </div>                             
+                        <div class="form-group">
+                                  <label > Level
+                                      <abbr title="Required">*</abbr>
+                                  </label>
+                                  <abbr title="Required">*</abbr>
+                                    <select class="custom-select d-block w-100" [(ngModel)]="languageitem.level" name="level">
+                                       <option value=""> Choose</option> 
+                                       <option > Beginner</option> 
+                                       <option > Intermediate</option>
+                                       <option > Advance </option>                                                                                                                                   
+                                     </select>
+                               <div class="invalid-feedback"> Please Select a Valid Level </div>
+                          </div>    
+
+                                                                                                                     
+                  </fieldset>
+              </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="toggleModalLanguagefalse()">Close</button>               
+                <button type="submit"   class="btn btn-success" [disabled]="checkEmpty([languageitem.name,languageitem.level])" (click)="saveLanguage()" >Save</button>
+            </div>
+            <!-- /.modal-footer -->
+     </div>
+ </div><!-- /.modal-dialog -->
+</div>
+
+
+<div *ngIf="togglemodaleducation || togglemodalskill || togglemodalexperience  ||  togglemodallanguage" class="aside-backdrop show"></div>
+
+
+
+
+
+
+

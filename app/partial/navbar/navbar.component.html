@@ -1,0 +1,75 @@
+      <header class="app-header app-header-dark" [ngClass]="{'hidenav':commonService.direction=='down','shownav':commonService.direction=='up'}" >
+        <!-- .top-bar -->
+        <div class="top-bar">
+          <!-- .top-bar-brand -->
+          <div class="top-bar-brand">
+            <a ><img src="assets/images/brand-inverse.png" alt="" style="height: 100px;width:auto; margin-top: -20px;">STUMAZE</a>
+          </div><!-- /.top-bar-brand -->
+          <!-- .top-bar-list -->
+          <div class="top-bar-list">
+            <!-- .top-bar-item -->           
+            <div class="top-bar-item px-2 py-2 d-md-none d-lg-none d-xl-none">
+              <!-- toggle menu -->
+              <button (click)="toggleAside()" class="hamburger hamburger-squeeze" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
+            </div><!-- /.top-bar-item -->
+            <div class="top-bar-item top-bar-item-full d-md-none d-lg-none d-xl-none ">
+              <a class="mx-auto" >STUMAZE</a>
+            </div>
+            <div class="top-bar-item px-auto mr-1 d-md-none d-lg-none d-xl-none">
+              <!-- toggle menu -->
+              <i  class="fas fa-comments" routerLink="/home/chats" style="font-size:20px;" ></i> <!-- /toggle menu -->
+            </div>
+           
+            <div class="top-bar-item d-md-none d-lg-none d-xl-none px-auto mr-2 ">
+              <div class="dropdown align-self-start ml-auto">
+                <button class="btn btn-icon btn-light text-muted" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-v"></i></button>
+                <div class="dropdown-arrow"></div>
+                <div class="dropdown-menu dropdown-menu-right mt-1">
+                   <a routerLink="/home/resumes/myprofile"  class="dropdown-item"> <i class="dropdown-icon oi oi-person"></i> My Profile</a>
+                   <a routerLink="/home/myresume"  class="dropdown-item"> <i class="dropdown-icon fas fa-edit"></i>  Edit Profile</a>
+                   <a  routerLink="/home/myfeeds" class="dropdown-item"> <i class="dropdown-icon fas fa-id-card"></i>  My Feeds</a>
+                   <a (click)="logout()"  class="dropdown-item h"> <i class="dropdown-icon oi oi-account-logout"></i>  Log out</a>                   
+                </div>
+              </div>
+            </div>
+
+            <!-- .top-bar-item -->
+            <div class="top-bar-item top-bar-item-right px-0">
+              <!-- .btn-account -->
+              <div class="dropdown d-none d-sm-flex">
+                <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="user-avatar user-avatar-md"><img  src="assets/images/avatars/profile.jpg" alt=""></span> <span class="account-summary pr-md-4 d-none d-md-block"><span class="account-name">{{auth.resume.about.name}}</span> <span class="account-description">{{auth.resume.about.title}}</span></span></button>
+                <div class="dropdown-arrow dropdown-arrow-left"></div><!-- .dropdown-menu -->
+                <div  class="dropdown-menu">
+                  <h6 class="dropdown-header d-none d-sm-block d-md-none"> {{resume.about.name}} </h6>
+                  <a [routerLink]="usermenuitem.path" *ngFor="let usermenuitem of commonService.usermenu" class="dropdown-item"><span [class]="usermenuitem.icon"></span> {{usermenuitem.title}}</a> 
+                  <a  class="dropdown-item h" (click)="logout()" ><span class="dropdown-icon oi oi-account-logout"></span> Logout </a>
+                  <div class="dropdown-divider"></div><a class="dropdown-item" [routerLink]="helpmenuitem.path" *ngFor="let helpmenuitem of commonService.helpmenu">{{helpmenuitem.title}}</a>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /.btn-account -->
+            </div><!-- /.top-bar-item -->
+          </div><!-- /.top-bar-list -->   
+          
+        </div><!-- /.top-bar -->
+
+        <div class="card d-md-none d-lg-none d-xl-none " >            
+            <div class="row ">
+              <div class="col-3  text-center" [ngClass]="{'bord': rla1.isActive}" (click)="gotoTop()" >
+                  <a routerLink="/home" [routerLinkActiveOptions]="{exact:
+                    true}" routerLinkActive #rla1="routerLinkActive"  ><img  class="mt-2 mb-2" style="height:32px;width:32px" *ngIf="!rla1.isActive"  src="assets/images/feedb.png" alt="" ><img *ngIf="rla1.isActive" style="height:32px;width:32px"  class="mt-2 mb-2"   src="assets/images/feed.png" alt="" >  </a> 
+              </div>
+                <div class="col-3  text-center"  [ngClass]="{'bord': rla3.isActive}" (click)="gotoTop()" >
+                    <a  routerLink="/home/resumes" [routerLinkActiveOptions]="{exact:
+                      true}" routerLinkActive #rla3="routerLinkActive" ><img class="mt-2 mb-2" style="height:32px;width:32px"   *ngIf="!rla3.isActive" src="assets/images/teamb.png" alt="" > <img  *ngIf="rla3.isActive" style="height:32px;width:32px"  class="mt-2 mb-2"   src="assets/images/team.png" alt="" >   </a> 
+                </div>
+                <div class="col-3  text-center"  [ngClass]="{'bord': rla2.isActive}" (click)="gotoTop()" >
+                  <a  routerLink="/home/projects" [routerLinkActiveOptions]="{exact:
+                    true}" routerLinkActive #rla2="routerLinkActive"  ><img class="mt-2 mb-2"  style="height:32px;width:32px"  *ngIf="!rla2.isActive"  src="assets/images/innovationb.png" alt="" > <img *ngIf="rla2.isActive"  style="height:32px;width:32px" class="mt-2 mb-2"   src="assets/images/innovation.png" alt="" >   </a> 
+                </div>
+               <div class="col-3  text-center"  [ngClass]="{'bord': rla4.isActive}" (click)="gotoTop()" >
+                  <a  routerLink="/home/notifications" [routerLinkActiveOptions]="{exact:
+                    true}" routerLinkActive #rla4="routerLinkActive" ><img class="mt-2 mb-2"  style="height:32px;width:32px"   *ngIf="!rla4.isActive"  src="assets/images/bellb.png" alt="" > <img  *ngIf="rla4.isActive" style="height:32px;width:32px"  class="mt-2 mb-2"   src="assets/images/bell.png" alt="" > <span class="tile tile-xs tile-circle bg-red" *ngIf="notificationService.count>0" >{{notificationService.count}}</span>   </a> 
+                </div>
+            </div>           
+        </div> 
+
+      </header>

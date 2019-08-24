@@ -1,0 +1,42 @@
+
+    <!-- .aside-content -->
+    <div class="aside-content">
+      <!-- .aside-header -->
+      <header class="aside-header d-block d-md-none">
+        <!-- .btn-account -->
+        <button (click)="collapse=!collapse" class="btn-account" [ngClass]="{'collapsed': collapse}" type="button"><span class="user-avatar user-avatar-lg"><img  src="assets/images/avatars/profile.jpg" alt=""></span> <span class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span> <span class="account-summary"><span class="account-name">{{auth.resume.about.name}}</span> <span class="account-description">{{auth.resume.about.title}}</span></span></button> <!-- /.btn-account -->
+        <!-- .dropdown-aside -->
+        <div class="dropdown-aside collapse" [ngClass]="{'show': collapse}">
+          <!-- dropdown-items -->
+          <div class="pb-3">
+            <a [routerLink]="usermenuitem.path"  routerLinkActive="has-active" (click)="toggleAside();collapse=!collapse" *ngFor="let usermenuitem of commonService.usermenu" class="dropdown-item" >
+              <span [class]="usermenuitem.icon"></span> {{usermenuitem.title}}</a>
+            <a (click)="logout()" class="dropdown-item hs"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>            
+            <div class="dropdown-divider"></div>
+            <a [routerLink]="helpmenuitem.path" *ngFor="let helpmenuitem of commonService.helpmenu" class="dropdown-item" >
+              {{helpmenuitem.title}}</a>
+          </div><!-- /dropdown-items -->
+        </div><!-- /.dropdown-aside -->
+      </header><!-- /.aside-header -->
+      <!-- .aside-menu -->
+      <div class="aside-menu overflow-auto">
+        <!-- .stacked-menu -->
+        <nav id="stacked-menu" class="stacked-menu">
+          <!-- .menu -->
+          <ul class="menu">
+            <li (click)="toggleAside()" [routerLink]="menuitem.path" routerLinkActive="has-active" class="menu-item" *ngFor="let menuitem of commonService.asidemenu"> <!-- use class has-active to highlight selected -->
+                <a class="menu-link h"><span [class]="menuitem.icon"></span> <span class="menu-text">{{menuitem.title}}</span> <!-- <span [class]="menuitem.badge.class">{{menuitem.badge.title}}</span> --></a>
+            </li>
+          </ul><!-- /.menu -->
+        </nav><!-- /.stacked-menu -->
+                 
+      </div><!-- /.aside-menu -->      
+   
+     
+      <footer class="aside-footer border-top p-3">
+        <div class="container ml-1 mr-1">
+          <a  href="https://wa.me/917357343066" > Contact us for any query on <i class="fab fa-whatsapp" style="color:green" aria-hidden="true" href="https://wa.me/917357343066"></i> 7357343066  </a>          
+        </div> 
+      </footer>
+    </div><!-- /.aside-content -->
+  

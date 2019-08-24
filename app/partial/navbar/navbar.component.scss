@@ -1,0 +1,25 @@
+.h:hover  {
+    color: azure !important ;
+    cursor: pointer !important ;
+}
+
+.fontsmall{
+    font-size: 20px
+}
+
+.bord{
+    border-bottom: 3px solid;
+    border-bottom-color:rgb(0, 0, 0);
+}
+
+@media (max-width: 768px) { 
+.hidenav{
+    margin-top:-3.5rem !important ;
+    transition: margin 0.5s ease;
+ }
+
+ .shownav {
+    transition: margin 0.5s ease !important ;
+ }
+
+}

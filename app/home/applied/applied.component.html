@@ -1,0 +1,52 @@
+<div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">   
+      <!-- floating action -->
+    
+      <!-- title and toolbar -->
+      <div class="d-md-flex align-items-md-start">
+        <h3 class="page-title mr-sm-auto"> My Appliance </h3><!-- .btn-toolbar -->
+       </div><!-- /title and toolbar -->
+    </header><!-- /.page-title-bar -->
+    <!-- .page-section -->
+    <div class="page-section">
+      <!-- .card -->
+      <div class="card card-fluid">
+       <!-- /.card-header -->
+        <!-- .card-body -->
+        <div class="card-body">
+          <!-- .form-group -->
+          <!-- .table-responsive -->
+          
+          <div class="table-responsive">
+            <!-- .table -->
+            <table class="table">
+              <!-- thead -->
+              <thead>
+                <tr >
+                  <th> Project Name </th>
+                  <th> Type </th>
+                  <th> Updated On </th>
+                  <th> Status </th>
+                </tr>
+              </thead><!-- /thead -->
+              <!-- tbody -->
+              <tbody>
+                <!-- tr -->
+                <tr  *ngFor="let request of requests">
+                  <td class="align-middle"> {{request.project_title}} </td>
+                  <td class="align-middle"> {{request.type}} </td>
+                  <td class="align-middle"> {{request.updatedOn.toDate() | date: 'M/d/yy, h:mm a'}}</td>
+                  <td class="align-middle"> {{request.status}}</td>
+                  </tr><!-- /tr -->
+                <!-- /tr -->
+              </tbody><!-- /tbody -->
+            </table><!-- /.table -->
+          </div><!-- /.table-responsive -->
+          <!-- .pagination -->
+        </div><!-- /.card-body -->
+      </div><!-- /.card -->
+    
+    <!-- /grid row -->
+    </div><!-- /.page-section -->
+  </div>

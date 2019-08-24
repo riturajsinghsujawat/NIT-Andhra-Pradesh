@@ -1,0 +1,185 @@
+<div class="page">
+  <!-- .page-inner -->
+<div class="page-inner">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">        
+            <li class="ml-auto">
+            <button  class="btn btn-success" type="button" *ngIf="mode=='list'"  (click)="mode='add'"> Add Test</button>
+            <button  class="btn btn-success ml-1" type="button" *ngIf="mode=='add'" (click)="mode='list'"> List</button>     
+          </li>
+          </ol>       
+        </nav>     
+    </header><!-- /.page-title-bar -->
+    <!-- .page-section -->
+  <div class="page-section">
+        
+    <div class="card card-fluid" *ngIf="mode=='list'" >
+            <!-- .list-group -->
+            <div class="list-group list-group-flush list-group-divider">
+              <!-- .list-group-item -->
+              <div *ngFor="let item of tests" class="list-group-item">
+                <div class="list-group-item-figure">
+                  <span class="tile tile-circle bg-success" > <span class="fa fa-file-archive"></span></span>
+                </div>
+                <div class="list-group-item-body">
+                  <h4 class="list-group-item-title">
+                    <a > {{item.name}} </a>
+                  </h4>
+                  <!-- <p class="list-group-item-text"> Jan 28, 2018 </p> -->
+                </div>
+                <div class="list-group-item-figure">                   
+                    <button class="btn btn-sm btn-secondary ml-1" (click)="startTest(item.docId)"> START </button>                     
+                </div>
+              </div><!-- /.list-group-item -->             
+            </div><!-- /.list-group -->
+      </div>          
+      
+  <ng-container *ngIf="mode=='add'">
+          <div id="labels" class="card">
+              <!-- .card-body -->
+              <div class="card-body">
+                <!-- .form -->
+                <form (ngSubmit)="addTest(testForm)" #testForm="ngForm">
+                    <!-- .fieldset -->
+                      <fieldset>
+                        <legend> Test Details </legend> <!-- .form-group -->
+                        <div class="form-group">
+                          <label for="lbl1"> Test name <abbr title="Required">*</abbr></label> <input type="text" #name="ngModel" name="name" required ngModel class="form-control"  placeholder="Test Name " >
+                          <div *ngIf="name.errors && (name.dirty)" class="alert alert-danger">                                         
+                           <div [hidden]="!name.errors.required">
+                              Test name is Required
+                            </div>       
+                          </div>
+                        </div><!-- /.form-group -->    
+                        <div class="form-group">
+                            <label for="lbl1"> Description <abbr title="Required">*</abbr></label> <textarea #description="ngModel" type="text" required name="description" ngModel class="form-control"  placeholder="Test Description" > </textarea>
+                            <div *ngIf="description.errors && (description.dirty )" class="alert alert-danger">                                         
+                              <div [hidden]="!description.errors.required">
+                                 Description is Required
+                               </div>       
+                             </div>
+                          </div><!-- /.form-group -->   
+                           <div class="form-group">
+                              <label for="lbl1"> Instructions <abbr title="Required">*</abbr></label> <textarea #instructions="ngModel" type="text" required name="instructions" ngModel class="form-control"  placeholder="Instructions"> </textarea>
+                              <div *ngIf="instructions.errors && (instructions.dirty )" class="alert alert-danger">                                         
+                                <div [hidden]="!instructions.errors.required">
+                                  Instructions are Required
+                                 </div>       
+                               </div>
+                            </div><!-- /.form-group -->  
+                            <div class="form-group">
+                                <label for="lbl1"> Duration in Minutes <abbr title="Required">*</abbr></label> <textarea type="number" #duration="ngModel" required pattern="[1-9]+" name="duration" ngModel class="form-control"  placeholder="Duration in Minutes"> </textarea>
+                                <div *ngIf="duration.errors && (duration.dirty)" class="alert alert-danger">                                         
+                                  <div [hidden]="!duration.errors.required">
+                                    Duration is Required
+                                   </div>       
+                                   <div [hidden]="!duration.errors.pattern">
+                                    Enter valid duration
+                                   </div>
+                                 </div>
+                              </div><!-- /.form-group -->                           
+                        </fieldset>
+                    <!-- /.fieldset -->
+                     <div class="form-actions">
+                        <button [disabled]=!testForm.valid class="btn btn-primary" type="submit"> Submit form </button>
+                      </div>             
+                </form><!-- /.form -->
+              </div><!-- /.card-body -->
+          </div>          
+    </ng-container>    
+    
+  <ng-container *ngIf="mode=='addquestions'">        
+        <div class="card">
+            <!-- .card-body -->
+            <div class="card-body">
+              <h3 class="card-title"> Add Question </h3><!-- form .needs-validation -->
+               <form  (ngSubmit)="addQuestionToArray(questionForm)" #questionForm="ngForm">
+                    <!-- .form-row -->
+                    <div class="form-row">
+                          <!-- form grid -->
+                          <div class="col-md-12 mb-3">
+                              <label for="validationTooltipUsername"> Question <abbr title="Required">*</abbr></label> 
+                              <input name="question" ngModel placeholder="question" type="text" class="form-control" id="validationTooltipUsername" placeholder="Username" aria-describedby="inputGroupPrepend" required>
+                           
+                            </div><!-- /form grid -->
+                          <!-- form grid -->
+                          <div class="col-md-6 mb-3">
+                            <label for="validationTooltip01">Option 1 <abbr title="Required">*</abbr></label>
+                            <input  required type="text"  name="option1" ngModel class="form-control" id="validationTooltip01" >                        
+                          </div><!-- /form grid --> 
+                          <!-- form grid -->
+                          <div class="col-md-6 mb-3">
+                                  <label for="validationTooltip01">Option 2 <abbr title="Required">*</abbr></label>
+                                  <input  required type="text"  name="option2" ngModel class="form-control" id="validationTooltip01">                        
+                            </div>
+                          <!-- /form grid -->  
+                        <!-- form grid -->
+                         <div class="col-md-6 mb-3">
+                              <label for="validationTooltip01">Option 3 <abbr title="Required">*</abbr></label>
+                              <input  required type="text"  name="option3" ngModel class="form-control" id="validationTooltip01" >                        
+                          </div><!-- /form grid -->  
+                        <!-- form grid -->
+                        <div class="col-md-6 mb-3">
+                              <label for="validationTooltip01">Option 4 <abbr title="Required">*</abbr></label>
+                              <input  required type="text"  name="option4" ngModel class="form-control" id="validationTooltip01" >                        
+                          </div>
+                        <!-- /form grid --> 
+                        <!-- form grid -->
+                        <div class="col-md-12 mb-3">
+                                    <label for="validationTooltipUsername">Answer<abbr title="Required">*</abbr></label> 
+                                    <input required name="answer" ngModel placeholder="answer" type="text" class="form-control" id="validationTooltipUsername" placeholder="Username" aria-describedby="inputGroupPrepend" >
+                                   
+                          </div><!-- /form grid -->
+                         <!-- form grid -->
+                          <div class="col-md-12 mb-3">
+                              <label for="validationTooltipUsername"> Explanation<abbr title="Required">*</abbr></label> 
+                              <input  required name="explanation" ngModel placeholder="Explanation" type="text" class="form-control" id="validationTooltipUsername" placeholder="Username" aria-describedby="inputGroupPrepend">
+                             
+                            </div><!-- /form grid -->                          
+                        <!-- form grid -->                             
+                          <input hidden name="id_test" [(ngModel)]="addingtestofid"  type="text">                       
+                      </div>
+                    <!-- /.form-row -->           
+                    <div class="form-actions">
+                      <button class="btn btn-primary" [disabled]=!questionForm.valid type="submit">Add Question</button>
+                    </div><!-- /.form-actions -->
+              </form><!-- /form .needs-validation -->
+            </div><!-- /.card-body -->
+       </div>
+       
+       <div class="card">
+          <div class="card-body">            
+              <h4 class="card-title"> Questions list</h4>
+          <!-- .list-group -->
+          <div class="list-group list-group-flush list-group-divider">
+            <!-- .list-group-item -->
+            <div class="list-group-item" *ngFor="let question of addingQuestions ; let i=index">           
+              <div class="list-group-item-body">
+                <h4 class="list-group-item-title">
+                  <h6>{{question.question}}</h6>
+                </h4>
+                <p class="list-group-item-text">{{question.answer}} </p>
+                <p class="list-group-item-text"> {{question.explanation}} </p>
+              </div>
+              <div class="list-group-item-figure">
+                <button class="btn btn-sm btn-icon btn-light" (click)="deletequestion(i)" ><i class="oi oi-trash"></i></button>
+              </div>
+            </div><!-- /.list-group-item -->                
+          </div><!-- /.list-group -->
+          <div class="form-actions">
+              <button class="btn btn-primary ml-auto" [disabled]="addingQuestions.length==null" (click)="saveQuestions()" type="submit">Save Test</button>
+          </div><!-- /.form-actions -->
+         </div>
+      </div>      
+
+    </ng-container>
+
+ </div><!-- /.page-section -->
+</div><!-- /.page-inner -->
+</div>
+
+
+
+

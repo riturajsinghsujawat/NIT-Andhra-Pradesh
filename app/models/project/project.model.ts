@@ -1,0 +1,20 @@
+export class Project {
+    title?:string;
+    shortDescription?:string;
+    stage?:String
+    location?:String
+    inspiration?:string
+    whatitdoes?:string
+    how?:string
+    challenges?:string
+    accomplishments?:string
+    learnings?:string
+    commercial?:string
+    uid?:string
+    budget?:string
+    docId?:string
+    createdOn?:Date
+    createdBy?:string
+    builtWith?:string[]
+    team?:{uid:string,username:string}[]
+}

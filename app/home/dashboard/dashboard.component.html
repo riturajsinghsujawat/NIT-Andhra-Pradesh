@@ -1,0 +1,57 @@
+<div id="body" class="page has-sidebar has-sidebar-expand-xl"><div class="sidebar-backdrop"></div>
+            <!-- .page-inner -->
+            <div class="page-inner" [ngClass]="{'marginsm-header-scroll': commonService.direction=='down', 'marginsm-header': commonService.direction!='down'}" >
+                <div class="scrolling-wrapper ml-2 mb-4" >                    
+                       <img *ngFor="let item of commonService.SliderImages" class="img-fluid img-slide mb-4 mr-2"  src="{{item|async}}" onError="this.src='assets/images/dummy/img.jpg'" alt="Card image cap">                                          
+                                       
+                  </div>                  
+              <!-- .page-section -->
+              <div class="page-section margin-sm" >
+                  <button class="btn btn-primary btn-floated d-lg-none" [hidden]="!commonService.isShow" style="z-index:1020;" (click)="gotoTop()" type="button" ><i class="fas fa-arrow-circle-up" aria-hidden="true"></i></button>
+                <!-- .section-block -->
+                <div class="row">
+                    <div  class="col-lg-12 col-xl-12" >
+                                       <!-- .feed-publisher -->
+                      <div [routerLink]="['/home/addpost/general/12']" class="feed-publisher rounded">
+                          <!-- .media -->
+                          <div class="media">
+                            <figure class="user-avatar user-avatar-md">
+                              <img src="assets/images/avatars/avatar.png" alt="">
+                            </figure><!-- .media-body -->
+                            <div class="media-body">
+                              <!-- .publisher -->
+                              <div class="publisher">
+                                <!-- .publisher-input -->
+                                <div class="publisher-input">
+                                  <textarea disabled rows="1" cols="50"  class="form-control" placeholder="Share News,Idea,Events"></textarea>
+                                </div><!-- /.publisher-input -->
+                                <!-- .publisher-actions -->
+                                <div class="publisher-actions">                                 
+                                     <button [routerLink]="['/home/addpost/general/12']" class="btn btn-primary" > Add  </button> 
+                                 <!--  <button type="submit" class="btn btn-primary" [disabled]="(!feed.valid && imagestatus!='uploaded successfully') || publishbtntext=='Publishing...'" > {{publishbtntext}}</button> -->
+                                </div><!-- /.publisher-actions -->
+                              </div><!-- /.publisher -->
+                            </div><!-- /.media-body -->
+                          </div><!-- /.media -->
+                        </div><!-- /.feed-publisher -->                    
+                      <app-singlefeed [feed]="feed" *ngFor="let feed of feedService.feeds"></app-singlefeed>
+                      <div                       
+                      infiniteScroll
+                      [infiniteScrollDistance]="2"
+                      [infiniteScrollThrottle]="50"
+                      (scrolled)="feedService.getNextFeeds()"
+                      class="text-center"
+                      >
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </div>
+                 </div><!-- /.section-block -->
+              </div><!-- /.page-section -->
+
+
+            </div><!-- /.page-inner -->
+        
+
+</div>

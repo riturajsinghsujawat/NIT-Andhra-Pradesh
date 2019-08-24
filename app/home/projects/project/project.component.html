@@ -1,0 +1,251 @@
+<div class="page has-sidebar has-sidebar-expand-xl"><div class="sidebar-backdrop"></div>
+            <!-- .page-inner -->
+            <div class="page-inner">
+              <!-- .page-title-bar -->
+              <header class="page-title-bar margin-sm">
+                <!-- .d-flex -->
+                <div class="d-flex justify-content-between align-items-center">
+                  <!-- .breadcrumb -->
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a class="ml-2" [routerLink]="[ '/home/projects' ]">  <i class="breadcrumb-icon fas fa-arrow-circle-left mt-2" > </i> Back </a>
+                      </li>
+                    </ol>
+                  </nav><!-- /.breadcrumb -->
+<!--                   <button type="button" class="btn btn-light btn-icon d-xl-none" data-toggle="sidebar"><i class="fa fa-angle-double-left"></i></button> -->
+                </div><!-- /.d-flex -->
+                <!-- grid row -->
+                <div class="row text-center text-sm-left">
+                  <!-- grid column -->
+                  <div class="col-sm-auto col-12 mb-2">
+                    <!-- .has-badge -->
+                    <div class="has-badge has-badge-bottom">
+                      <a  class="user-avatar user-avatar-xl"><img src="assets/images/avatars/team4.jpg" alt=""></a> <span class="tile tile-circle tile-xs" data-toggle="tooltip" title="" data-original-title="Public"></span>
+                    </div><!-- /.has-badge -->
+                  </div><!-- /grid column -->
+                  <!-- grid column -->
+                  <div class="col">
+                    <h1 class="page-title"> {{project.title}} </h1> 
+                    <button *ngIf="!admin"  (click)="applyForProject()" class="btn btn-success ml-auto"  type="button"> Apply to join </button> 
+                    <button *ngIf="admin"  (click)="delete()" class="btn btn-danger ml-auto"  type="button"> Delete </button>                                                            
+                  </div><!-- /grid column -->  
+                </div><!-- /grid row -->
+                <!-- .nav-scroller -->
+                <div class="nav-scroller border-bottom">
+                  <!-- .nav -->
+                  <div class="nav nav-tabs">
+                    <a (click)="overview()" class="nav-link" [ngClass]="{'active': mode=='overview'}">Overview</a>
+                    <a (click)="getFeeds()" class="nav-link" [ngClass]="{'active': mode=='feed'}">Discussion</a>                                        
+                  </div><!-- /.nav -->
+                </div><!-- /.nav-scroller -->
+              </header><!-- /.page-title-bar -->
+              <!-- .page-section -->
+              <div class="page-section">
+                <!-- .section-block -->
+                <div class="section-block" *ngIf="mode=='feed'">                           
+                    <!-- .feed-publisher -->
+                    <div [routerLink]="['/home/addpost/project/',projectId]"  class="feed-publisher rounded">
+                      <!-- .media -->
+                      <div class="media">
+                        <figure class="user-avatar user-avatar-md">
+                          <img src="assets/images/avatars/avatar.png" alt="">
+                        </figure><!-- .media-body -->
+                        <div class="media-body">
+                          <!-- .publisher -->
+                          <div class="publisher">
+                            <!-- .publisher-input -->
+                            <div class="publisher-input">
+                              <textarea disabled rows="1" cols="50"  class="form-control" placeholder="Discuss about project"></textarea>
+                            </div><!-- /.publisher-input -->
+                            <!-- .publisher-actions -->
+                            <div class="publisher-actions">                                 
+                                 <button [routerLink]="['/home/addpost/project/',projectId]"  class="btn btn-primary" > Add  </button> 
+                             <!--  <button type="submit" class="btn btn-primary" [disabled]="(!feed.valid && imagestatus!='uploaded successfully') || publishbtntext=='Publishing...'" > {{publishbtntext}}</button> -->
+                            </div><!-- /.publisher-actions -->
+                          </div><!-- /.publisher -->
+                        </div><!-- /.media-body -->
+                      </div><!-- /.media -->
+                    </div><!-- /.feed-publisher -->
+                  <!-- .feed -->
+                  <div class="spinner-border text-primary" style="margin-left:150px !important;" *ngIf="loader" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>  
+                  <app-singlefeed [feed]="feed" *ngFor="let feed of feeds"></app-singlefeed>
+                </div><!-- /.section-block -->
+
+                  <!-- .section-block -->
+                  <div class="section-block" *ngIf="mode=='overview'">
+                    <div class="card-body p-sm-1">     
+                        <h5> Short Description </h5>
+                        <p> {{project.shortDescription}}</p>
+
+                        <h5> Stage </h5>
+                        <p> {{project.stage}}</p>
+
+                        <h5> Location </h5>
+                      <p> {{project.location}}</p>
+                      
+                      <h5> Inspiration </h5>
+                      <p> {{project.shortDescription}}</p>
+
+                      <h5> Stage  ? </h5>
+                      <p> {{project.stage}} </p>
+                      
+                      <h5> What it will do ? </h5>
+                      <p> {{project.whatitdoes}}</p>                        
+
+                      <h5> Work done so far ?</h5>
+                      <p> {{project.accomplishments}}</p>
+                   
+                      <h5> What will one learn while doing this project ?</h5>
+                      <p> {{project.learnings}}</p>
+
+                      <h5> Commercial viability ? </h5>
+                      <p> {{project.commercial}}</p>                                     
+                      
+                      <h5> Technologies Involved</h5>
+                      <span *ngFor="let item of project.builtWith" class="badge badge-dark ml-1 mr-1">{{item}}</span>                      
+                    </div>
+                  </div><!-- /.section-block -->
+
+              </div><!-- /.page-section -->
+              
+            </div><!-- /.page-inner -->
+            <!-- .page-sidebar -->
+            <div class="page-sidebar">
+              <!-- .sidebar-header -->
+              <header class="sidebar-header margin-sm-top d-lg-none">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">
+                      <a  onclick="Looper.toggleSidebar()"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Back </a>
+                    </li>
+                  </ol>
+                </nav>
+              </header><!-- /.sidebar-header -->
+              <!-- .sidebar-section-fill -->
+              <div class="sidebar-section-fill">
+                <!-- .card -->
+                <div class="card card-reflow">
+                  <!-- .card-body -->
+                  <div class="card-body">
+                    <button type="button" class="close mt-n1 d-none d-xl-none d-sm-block" onclick="Looper.toggleSidebar()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="card-title"> Summary </h4><!-- grid row -->
+                    <div class="row">
+                      <!-- grid column -->
+                      <div class="col-6">
+                        <!-- .metric -->
+                        <div class="metric">
+                          <h6 class="metric-value"> Budget </h6>
+                          <p class="metric-label mt-1"> RS 4200 </p>
+                        </div><!-- /.metric -->
+                      </div><!-- /grid column -->
+                      <!-- grid column -->
+                      <div class="col-6">
+                        <!-- .metric -->
+                        <div class="metric">
+                          <h6 class="metric-value"> Members </h6>
+                          <p  class="metric-label mt-1">{{project.team.length}}</p>
+                        </div><!-- /.metric -->
+                      </div><!-- /grid column -->
+                      <!-- grid column -->
+                      <div class="col-6">
+                        <!-- .metric -->
+                        <div class="metric">
+                          <h6 class="metric-value"> Project Of </h6>
+                          <p  class="metric-label mt-1"> {{project.team[0].username}} </p>
+                        </div><!-- /.metric -->
+                      </div><!-- /grid column -->
+                      <!-- grid column -->
+                      <div class="col-6">
+                        <!-- .metric -->
+                        <div class="metric">
+                          <h6 class="metric-value"> Tasks </h6>
+                          <p class="metric-label mt-1"> Null </p>
+                        </div><!-- /.metric -->
+                      </div><!-- /grid column -->
+                    </div><!-- /grid row -->
+                  </div><!-- /.card-body -->
+                  <!-- .card-body -->
+                  <div class="card-body border-top pb-1">
+                    <h4 class="card-title"> Team Details </h4><!-- .progress -->
+                   </div><!-- /.card -->
+                  <!-- .list-group -->
+                  <div class="list-group list-group-bordered list-group-reflow">
+                    <!-- .list-group-item -->
+                    <div *ngFor="let item of project.team" class="list-group-item justify-content-between align-items-center">
+                        <ng-container>
+                
+                            <div class="list-group-item-figure">
+                                <div class="tile tile-circle bg-blue"> {{item.username.substring(0,1)}} </div>
+                              </div>
+                            <div class="list-group-item-body">
+                                <h4  class="list-group-item-title"> {{item.username}} </h4>
+                              </div>
+                            </ng-container>
+                            <div style="margin: 5px" class="btn-group ml-auto">
+                                <div class="dropdown">
+                                  <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-expanded="false"><i
+                                      class="fa fa-ellipsis-v"></i></button>
+                                  <div class="dropdown-arrow"></div>
+                                  <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                                    style="position: absolute; will-change: top, left; top: 36px; left: 36px;">
+                                    <a [routerLink]="['/home/resumes',item.uid]" class="dropdown-item">View Profile</a>
+                                    <a *ngIf="admin" (click)="remove(item)" class="dropdown-item">Remove Member</a>
+                                    
+                                  </div>
+                                </div>
+              
+              
+                              </div>
+                       </div><!-- /.list-group-item -->
+                    <!-- /.list-group-item -->
+                    <!-- .list-group-item -->
+                   </div><!-- /.list-group -->
+                  <!-- .card-body -->
+                  
+                </div><!-- /.card -->
+              </div><!-- /.sidebar-section-fill -->
+            </div><!-- /.page-sidebar -->
+
+            
+        <div class="modal fade has-shown show" *ngIf="toggleApplyProject"  style="display:block;padding:15px;" >
+          <!-- .modal-dialog -->
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <!-- .modal-content -->
+            <div class="modal-content">
+                          <!-- .modal-header -->
+                          <div class="modal-header">
+                            <h5 class="modal-title"> Apply Project </h5>
+                          </div>
+                          <!-- /.modal-header -->
+                          <!-- .modal-body -->
+                         <div class="modal-body">                                                   
+                                     <fieldset>      
+                                          <!-- .form-group -->
+                                          <div class="form-group">
+                                            <label for="lbl1"> Why should you be involved in the project ?                                             
+                                            </label>
+                                            <textarea  name="message"  class="form-control" [(ngModel)]="appliance.message" id="lbl3" rows="3" placeholder="Your Answer"></textarea>
+                                          </div>
+                                          <!-- /.form-group -->
+                                                               
+                                      </fieldset>                       
+                                
+                                  <!-- .modal-footer -->
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-light" (click)="toggleApplyProject = false" >Close</button>
+                                     
+                                      <button type="submit" class="btn btn-success" [disabled]="!appliance.message" (click)="Apply()" >Save</button>
+                                  </div>
+                                  <!-- /.modal-footer -->
+                            
+                        </div>
+             </div>
+         </div><!-- /.modal-dialog -->
+      </div>
+
+      
+<div *ngIf="toggleApplyProject" class="aside-backdrop show"></div>
+          </div>

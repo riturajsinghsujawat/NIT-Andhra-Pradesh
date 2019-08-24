@@ -1,0 +1,44 @@
+    <!-- .auth -->
+    <main class="auth">
+      <header id="auth-header" class="auth-header" >
+        <h1>
+          <img src="assets/images/brand-inverse.png" alt="" height="72"> <span class="sr-only">Sign In</span>
+        </h1>
+        <p> Don't have a account? <a routerLink="/auth/signup">Create One</a>
+        </p>
+      </header>
+      <!-- form -->
+      <form (ngSubmit)="auth(auth_cred)" #auth_cred="ngForm" class="auth-form">
+        <!-- .form-group -->
+        <div class="form-group">
+          <div class="form-label-group">
+            <input name="email" ngModel type="text" id="inputUser" class="form-control" style="text-transform:lowercase" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$" placeholder="Username" required autofocus=""  > <label for="inputUser">Email</label>
+           
+          </div>
+        </div><!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group">
+          <div class="form-label-group">
+            <input name="password" ngModel minlength="8" type="password"  id="inputPassword" class="form-control" placeholder="Password" required> <label for="inputPassword">Password</label>
+         
+          </div>
+        </div><!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block" [disabled]="!auth_cred.valid" type="submit"> Sign In </button>
+        </div><!-- /.form-group -->
+        <!-- .form-group -->
+        <!-- <div class="form-group text-center">
+          <div class="custom-control custom-control-inline custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="remember-me"> <label class="custom-control-label" for="remember-me">Keep me sign in</label>
+          </div>
+        </div> --><!-- /.form-group -->
+        <!-- recovery links -->
+        <div class="text-center pt-3">
+         <span class="mx-2">·</span> <a routerLink="/auth/reset-password" class="link">Forgot Password?</a>
+        </div><!-- /recovery links -->
+      </form><!-- /.auth-form -->
+      <!-- copyright -->
+      <footer class="auth-footer"> © 2018 All Rights Reserved. <a >Privacy</a> & <a >Terms</a>
+      </footer>
+    </main><!-- /.auth -->

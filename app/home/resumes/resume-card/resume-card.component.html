@@ -1,0 +1,27 @@
+<div class="card ">
+  <!-- .card-body -->
+  <div class="card-body">
+    <!-- grid row -->
+    <div class="media align-items-center">
+      <!-- grid column -->
+      <div class="col-auto">
+        <!-- .user-avatar -->
+        <a   class="user-avatar user-avatar-xl">
+          <img *ngIf="mode"   src="{{item.imageLogo|async}}" onError="this.src='assets/images/avatars/avatar.png'" alt="">
+          <img *ngIf="!mode"  src="this.src='assets/images/avatars/avatar.png'" onError="this.src='assets/images/avatars/avatar.png'" alt="">
+        </a> <!-- /.user-avatar -->
+      </div><!-- /grid column -->
+      <!-- grid column -->
+      <div class="col">
+        <h6 class="card-title text-truncate">
+          <a> {{(item.about.name.length>23)? (item.about.name | slice:0:23)+'..':(item.about.name)}} </a>
+        </h6>        
+        <h6 class="card-subtitle text-muted">
+            <i class="fas fa-id-badge"></i> {{item.about.title}} 
+            <br> <i class="fas fa-map-marker-alt mt-2 mb-1"></i> {{item.about.address}} 
+           </h6>
+        <span *ngFor="let skill of item.skills.skills.items | slice:0:2; let i=index" class="badge badge-sm badge-info" [ngClass]="{'ml-1 mr-1': i==1}" > {{(skill.skillName.length>10)? (skill.skillName | slice:0:10)+'..':(skill.skillName)}} </span>     
+      </div>
+      <!-- /grid column -->   
+  </div><!-- /.card-body -->
+</div>
